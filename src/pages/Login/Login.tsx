@@ -1,12 +1,51 @@
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useEffect, useRef } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import paths from 'src/constants/paths'
+import { loginSchema, LoginFormData } from 'src/utils/rules'
+import { login } from 'src/apis/auth.api'
+import { AppContext } from 'src/contexts/app.context'
 
 export default function Login() {
   const imgRef = useRef<HTMLImageElement>(null)
   const imgBoundRef = useRef<HTMLDivElement>(null)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(loginSchema)
+  })
+
+  const { setIsAuthenticated } = useContext(AppContext)
+  const loginMutation = useMutation({
+    mutationFn: (body: LoginFormData) => login(body)
+  })
+
+  const navigate = useNavigate()
+
+  const onSubmit = (data: LoginFormData) => {
+    loginMutation.mutate(data, {
+      onSuccess: (response) => {
+        const status = response.data.status
+        if (status === 'OK') {
+          setIsAuthenticated(true)
+          navigate(paths.home)
+          toast.success(response.data.message)
+        } else toast.error(response.data.message)
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      }
+    })
+  }
 
   useEffect(() => {
     let startX: number
@@ -47,19 +86,29 @@ export default function Login() {
         </div>
         <div className='sm:w-1/2 px-8 text-center'>
           <p className='text-2xl font-bold mb-8'>Đăng nhập</p>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
               type='text'
               placeholder='Email'
-              autoComplete='username'
+              {...register('email')}
             />
+            {errors.email && (
+              <p className='text-red-700 text-start ml-4' role='alert'>
+                {errors.email.message}
+              </p>
+            )}
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
               type='password'
               placeholder='Mật khẩu'
-              autoComplete='current-password'
+              {...register('password')}
             />
+            {errors.password && (
+              <p className='text-red-700 text-start ml-4' role='alert'>
+                {errors.password.message}
+              </p>
+            )}
             <button className='w-full px-6 py-3 my-6 bg-greenPrimary rounded-3xl text-xl text-white flex justify-center items-center hover:bg-greenPrimary/90'>
               Đăng nhập
             </button>
