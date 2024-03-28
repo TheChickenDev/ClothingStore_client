@@ -7,9 +7,10 @@ export const theme = {
     colors: {
       greenPrimary: '#57b846',
       main: '#f53d2d',
-      orangePrimary: '#f63',
+      yellowPrimary: '#ffcc00',
       grayLayer: 'rgba(0, 0, 0, 0.3)',
-      grayCustom: '#f9fafa'
+      grayCustom: '#f9fafa',
+      blackPrimary: '#1d1e23'
     }
   }
 }

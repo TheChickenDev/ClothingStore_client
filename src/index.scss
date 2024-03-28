@@ -1,0 +1,56 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  line-height: 1.2;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-weight: 400;
+}
+
+@layer base {
+}
+
+@layer components {
+  .hoverChangeTextColor {
+    transition: color 0.2s linear;
+
+    &:hover {
+      color: #ffcc00;
+    }
+  }
+
+  .hoverHeaderBtn {
+    position: relative;
+    transition: color 0.2s linear;
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #ffcc00;
+      transition: width 0.2s linear;
+    }
+
+    &:hover {
+      color: #ffcc00;
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
