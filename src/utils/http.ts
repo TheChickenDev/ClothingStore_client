@@ -4,8 +4,11 @@ import {
   saveRefreshTokenToLocalStorage,
   saveUserDataToLocalStorage,
   getAccessTokenFromLocalStorage,
-  removeDataFromLocalStorage
+  removeDataFromLocalStorage,
+  saveThemeToLocalStorage,
+  saveLanguageToLocalStorage
 } from './auth'
+import languages from 'src/constants/languages'
 
 class HTTP {
   instance: AxiosInstance
@@ -40,6 +43,8 @@ class HTTP {
             saveAccessTokenToLocalStorage(access_token)
             saveRefreshTokenToLocalStorage(refresh_token)
             saveUserDataToLocalStorage(JSON.stringify(user))
+            saveThemeToLocalStorage(false)
+            saveLanguageToLocalStorage(languages.vietnamese)
           }
         } else if (url === 'user/logout') {
           removeDataFromLocalStorage()
