@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 import {
   saveAccessTokenToLocalStorage,
   saveRefreshTokenToLocalStorage,
-  saveUserDataToLocalStorage,
+  saveUserEmailToLocalStorage,
   getAccessTokenFromLocalStorage,
   removeDataFromLocalStorage,
   saveThemeToLocalStorage,
@@ -42,7 +42,7 @@ class HTTP {
             const { access_token, refresh_token, user } = response.data.data
             saveAccessTokenToLocalStorage(access_token)
             saveRefreshTokenToLocalStorage(refresh_token)
-            saveUserDataToLocalStorage(JSON.stringify(user))
+            saveUserEmailToLocalStorage(user.email)
             saveThemeToLocalStorage(false)
             saveLanguageToLocalStorage(languages.vietnamese)
           }

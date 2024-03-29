@@ -10,3 +10,7 @@ export const registerAccount = (body: RegisterFormData) => {
 export const login = (body: LoginFormData) => {
   return http.post<SuccessResponse<User>>('user/login', body)
 }
+
+export const logout = () => {
+  return http.post<SuccessResponse<null>>('user/logout')
+}

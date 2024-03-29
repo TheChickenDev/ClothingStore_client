@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { registerAccount } from 'src/apis/auth.api'
+import { loginImg } from 'src/assets/images'
 import paths from 'src/constants/paths'
 import { AppContext } from 'src/contexts/app.context'
 import { RegisterFormData, registerSchema } from 'src/utils/rules'
@@ -81,7 +82,7 @@ export default function Register() {
       <div className='w-[960px] max-w-[90%] min-h-96 pt-36 pb-24 md:px-16 rounded-xl md:flex md:justify-evenly md:items-center bg-white my-12'>
         <div className='md:w-2/5 p-8' ref={imgBoundRef}>
           <img
-            src='https://colorlib.com/etc/lf/Login_v1/images/img-01.png'
+            src={loginImg.loginAnimatedImg}
             alt='login'
             className='w-full h-full block will-change-transform'
             ref={imgRef}

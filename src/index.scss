@@ -23,6 +23,7 @@ body {
 @layer components {
   .hoverChangeTextColor {
     transition: color 0.2s linear;
+    cursor: pointer;
 
     &:hover {
       color: #ffcc00;

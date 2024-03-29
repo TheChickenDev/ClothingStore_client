@@ -12,6 +12,7 @@ import paths from 'src/constants/paths'
 import { loginSchema, LoginFormData } from 'src/utils/rules'
 import { login } from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
+import { loginImg } from 'src/assets/images'
 
 export default function Login() {
   const imgRef = useRef<HTMLImageElement>(null)
@@ -78,7 +79,7 @@ export default function Login() {
       <div className='w-[960px] max-w-[90%] min-h-96 pt-36 pb-24 sm:px-16 rounded-xl sm:flex sm:justify-evenly sm:items-center bg-white my-12'>
         <div className='sm:w-2/5 p-8' ref={imgBoundRef}>
           <img
-            src='https://colorlib.com/etc/lf/Login_v1/images/img-01.png'
+            src={loginImg.loginAnimatedImg}
             alt='login'
             className='w-full h-full block will-change-transform'
             ref={imgRef}

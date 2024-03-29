@@ -1,13 +1,12 @@
 import { createContext, useState } from 'react'
 import languages from 'src/constants/languages'
-import { User } from 'src/types/user.type'
-import { getAccessTokenFromLocalStorage, getThemeFromLocalStorage, getUserDataFromLocalStorage } from 'src/utils/auth'
+import { getAccessTokenFromLocalStorage, getThemeFromLocalStorage, getUserEmailFromLocalStorage } from 'src/utils/auth'
 
 interface AppContextInterface {
   isAuthenticated: boolean
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>
-  userData: User | null
-  setUserData: React.Dispatch<React.SetStateAction<User | null>>
+  userEmail: string
+  setUserEmail: React.Dispatch<React.SetStateAction<string>>
   darkTheme: boolean
   setDarkTheme: React.Dispatch<React.SetStateAction<boolean>>
   language: string
@@ -17,8 +16,8 @@ interface AppContextInterface {
 const initialAppContext: AppContextInterface = {
   isAuthenticated: Boolean(getAccessTokenFromLocalStorage()),
   setIsAuthenticated: () => null,
-  userData: getUserDataFromLocalStorage(),
-  setUserData: () => null,
+  userEmail: getUserEmailFromLocalStorage(),
+  setUserEmail: () => null,
   darkTheme: getThemeFromLocalStorage(),
   setDarkTheme: () => null,
   language: languages.vietnamese,
@@ -29,7 +28,7 @@ export const AppContext = createContext<AppContextInterface>(initialAppContext)
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAppContext.isAuthenticated)
-  const [userData, setUserData] = useState<User | null>(initialAppContext.userData)
+  const [userEmail, setUserEmail] = useState<string>(initialAppContext.userEmail)
   const [darkTheme, setDarkTheme] = useState<boolean>(initialAppContext.darkTheme)
   const [language, setLanguage] = useState<string>(initialAppContext.language)
 
@@ -38,8 +37,8 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         isAuthenticated,
         setIsAuthenticated,
-        userData,
-        setUserData,
+        userEmail,
+        setUserEmail,
         darkTheme,
         setDarkTheme,
         language,

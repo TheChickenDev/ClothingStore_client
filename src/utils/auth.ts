@@ -1,5 +1,4 @@
 import languages from 'src/constants/languages'
-import { User } from 'src/types/user.type'
 
 export const saveAccessTokenToLocalStorage = (access_token: string) => {
   localStorage.setItem('access_token', access_token)
@@ -19,14 +18,13 @@ export const getRefreshTokenFromLocalStorage = (): string | null => {
   return refresh_token
 }
 
-export const saveUserDataToLocalStorage = (email: string) => {
-  localStorage.setItem('user_data', email)
+export const saveUserEmailToLocalStorage = (email: string) => {
+  localStorage.setItem('user_email', email)
 }
 
-export const getUserDataFromLocalStorage = (): User | null => {
-  const userData = localStorage.getItem('user_data')
-  if (userData) return JSON.parse(userData)
-  return null
+export const getUserEmailFromLocalStorage = (): string => {
+  const email = localStorage.getItem('user_email') || ''
+  return email
 }
 
 export const saveThemeToLocalStorage = (theme: boolean) => {
@@ -52,7 +50,7 @@ export const getLanguageFromLocalStorage = (): string => {
 export const removeDataFromLocalStorage = () => {
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
-  localStorage.removeItem('user_data')
+  localStorage.removeItem('user_email')
   localStorage.removeItem('darkTheme')
   localStorage.removeItem('language')
 }
