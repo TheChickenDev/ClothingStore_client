@@ -69,10 +69,10 @@ export default function Header() {
   }
 
   return (
-    <div className='bg-blackPrimary'>
+    <div className='bg-blackPrimary fixed top-0 left-0 right-0 z-50 sm:h-[164px]'>
       {width >= 640 ? (
         <>
-          <div className='flex justify-between items-center lg:max-w-7xl m-auto py-4 lg:px-24 md:px-16 px-8'>
+          <div className='flex justify-between items-center m-auto py-4 lg:px-32 md:px-16 px-4'>
             <Link to={paths.home}>
               <img src={logoImg.logo} alt='logo' className='block h-20' />
             </Link>
@@ -204,7 +204,7 @@ export default function Header() {
             </div>
           </div>
           <hr />
-          <div className='flex justify-between items-center lg:max-w-7xl m-auto py-2 lg:px-24 md:px-16 px-8'>
+          <div className='flex justify-between items-center m-auto py-2 lg:px-32 md:px-16 px-4'>
             <div className='flex justify-between items-center gap-4 text-white text-sm'>
               <Link to={paths.home} className='p-2 hoverHeaderBtn'>
                 Trang chủ
@@ -304,7 +304,7 @@ export default function Header() {
                   x: [300, 0],
                   opacity: 1
                 }}
-                exit={{ x: 0, opacity: 0 }}
+                exit={{ x: [0, 0], opacity: 0 }}
                 className='fixed top-20 left-0 bottom-0 right-0 bg-blackPrimary'
               >
                 <hr />
