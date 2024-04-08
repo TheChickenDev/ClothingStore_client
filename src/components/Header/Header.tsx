@@ -1,4 +1,4 @@
-import { faCircleUser, faSun, faUser } from '@fortawesome/free-regular-svg-icons'
+import { faSun, faUser } from '@fortawesome/free-regular-svg-icons'
 import {
   faBagShopping,
   faBars,
@@ -26,7 +26,7 @@ import Popover from '../Popover'
 import PopoverMobile from '../PopoverMobile/PopoverMobile'
 
 export default function Header() {
-  const { isAuthenticated, setIsAuthenticated, userEmail, darkTheme, setDarkTheme, language, setLanguage } =
+  const { isAuthenticated, setIsAuthenticated, userEmail, userAvatar, darkTheme, setDarkTheme, language, setLanguage } =
     useContext(AppContext)
   const [openLanguagePopover, setOpenLanguagePopover] = useState<boolean>(false)
   const [openUserPopover, setOpenUserPopover] = useState<boolean>(false)
@@ -152,7 +152,9 @@ export default function Header() {
                       onMouseEnter={() => setOpenUserPopover(true)}
                       onMouseLeave={() => setOpenUserPopover(false)}
                     >
-                      <FontAwesomeIcon icon={faCircleUser} className='text-4xl mr-2' />
+                      <div className='w-10 h-10 rounded-[50%] overflow-hidden'>
+                        <img src={userAvatar} alt='avatar' className='block w-full h-full' />
+                      </div>
                       <Popover isOpened={openUserPopover} position='right'>
                         <div className='text-black text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
                           <p className='w-full p-2'>{userEmail}</p>

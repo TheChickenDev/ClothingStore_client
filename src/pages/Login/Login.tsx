@@ -12,7 +12,7 @@ import paths from 'src/constants/paths'
 import { loginSchema, LoginFormData } from 'src/utils/rules'
 import { login } from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
-import { loginImg } from 'src/assets/images'
+import { loginImg, userImg } from 'src/assets/images'
 
 export default function Login() {
   const imgRef = useRef<HTMLImageElement>(null)
@@ -25,7 +25,7 @@ export default function Login() {
     resolver: yupResolver(loginSchema)
   })
 
-  const { setIsAuthenticated } = useContext(AppContext)
+  const { setIsAuthenticated, setUserEmail, setUserAvatar } = useContext(AppContext)
   const loginMutation = useMutation({
     mutationFn: (body: LoginFormData) => login(body)
   })
@@ -36,8 +36,11 @@ export default function Login() {
     loginMutation.mutate(data, {
       onSuccess: (response) => {
         const status = response.data.status
-        if (status === 'OK') {
+        const user = response.data.data?.user
+        if (status === 'OK' && user) {
           setIsAuthenticated(true)
+          setUserEmail(user.email)
+          setUserAvatar(user.avatar ? user.avatar : userImg.defaultAvatar)
           navigate(paths.home)
           toast.success(response.data.message)
         } else toast.error(response.data.message)
@@ -76,7 +79,7 @@ export default function Login() {
 
   return (
     <div className='w-full h-full bg-gradient-to-r from-fuchsia-500 to-orange flex justify-center items-center'>
-      <div className='w-[960px] max-w-[90%] min-h-96 pt-36 pb-24 sm:px-16 rounded-xl sm:flex sm:justify-evenly sm:items-center bg-white my-12'>
+      <div className='w-[960px] max-w-[90%] min-h-96 py-40 sm:px-16 rounded-xl sm:flex sm:justify-evenly sm:items-center bg-white my-12'>
         <div className='sm:w-2/5 p-8' ref={imgBoundRef}>
           <img
             src={loginImg.loginAnimatedImg}
@@ -86,7 +89,7 @@ export default function Login() {
           />
         </div>
         <div className='sm:w-1/2 px-8 text-center'>
-          <p className='text-2xl font-bold mb-8'>Đăng nhập</p>
+          <p className='text-2xl font-bold mb-2'>Đăng nhập</p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
@@ -94,32 +97,36 @@ export default function Login() {
               placeholder='Email'
               {...register('email')}
             />
-            {errors.email && (
-              <p className='text-red-700 text-start ml-4' role='alert'>
-                {errors.email.message}
-              </p>
-            )}
+            <div className='min-h-5'>
+              {errors.email && (
+                <p className='text-red-700 text-start ml-4' role='alert'>
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
               type='password'
               placeholder='Mật khẩu'
               {...register('password')}
             />
-            {errors.password && (
-              <p className='text-red-700 text-start ml-4' role='alert'>
-                {errors.password.message}
-              </p>
-            )}
-            <button className='w-full px-6 py-3 my-6 bg-greenPrimary rounded-3xl text-xl text-white flex justify-center items-center hover:bg-greenPrimary/90'>
+            <div className='min-h-5'>
+              {errors.password && (
+                <p className='text-red-700 text-start ml-4' role='alert'>
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <button className='w-full px-6 py-3 mt-2 bg-greenPrimary rounded-3xl text-xl text-white hover:bg-greenPrimary/90'>
               Đăng nhập
             </button>
           </form>
-          <p>
+          <p className='my-2'>
             <Link to={paths.home} className='text-sm text-gray-700 hover:text-greenPrimary'>
               Quên mật khẩu?
             </Link>
           </p>
-          <p className='my-6'>
+          <p className='my-2'>
             <Link to={paths.register} className='text-sm text-gray-700 hover:text-greenPrimary'>
               Tạo tài khoản mới <FontAwesomeIcon icon={faArrowRight} />
             </Link>

@@ -23,8 +23,17 @@ export const saveUserEmailToLocalStorage = (email: string) => {
 }
 
 export const getUserEmailFromLocalStorage = (): string => {
-  const email = localStorage.getItem('user_email') || ''
-  return email
+  const email = localStorage.getItem('user_email')
+  return email || 'anonymous@hein.shop'
+}
+
+export const saveUserAvatarToLocalStorage = (avatar: string) => {
+  localStorage.setItem('user_avatar', avatar)
+}
+
+export const getUserAvatarFromLocalStorage = (): string => {
+  const avatar = localStorage.getItem('user_avatar')
+  return avatar || ''
 }
 
 export const saveThemeToLocalStorage = (theme: boolean) => {
@@ -51,6 +60,7 @@ export const removeDataFromLocalStorage = () => {
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
   localStorage.removeItem('user_email')
+  localStorage.removeItem('user_avatar')
   localStorage.removeItem('darkTheme')
   localStorage.removeItem('language')
 }

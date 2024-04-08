@@ -2,11 +2,12 @@ import axios, { AxiosInstance } from 'axios'
 import {
   saveAccessTokenToLocalStorage,
   saveRefreshTokenToLocalStorage,
-  saveUserEmailToLocalStorage,
   getAccessTokenFromLocalStorage,
   removeDataFromLocalStorage,
   saveThemeToLocalStorage,
-  saveLanguageToLocalStorage
+  saveLanguageToLocalStorage,
+  saveUserEmailToLocalStorage,
+  saveUserAvatarToLocalStorage
 } from './auth'
 import languages from 'src/constants/languages'
 
@@ -43,6 +44,7 @@ class HTTP {
             saveAccessTokenToLocalStorage(access_token)
             saveRefreshTokenToLocalStorage(refresh_token)
             saveUserEmailToLocalStorage(user.email)
+            saveUserAvatarToLocalStorage(user.avatar)
             saveThemeToLocalStorage(false)
             saveLanguageToLocalStorage(languages.vietnamese)
           }
