@@ -1,12 +1,7 @@
 import { createContext, useState } from 'react'
-import { userImg } from 'src/assets/images'
 import languages from 'src/constants/languages'
-import {
-  getAccessTokenFromLocalStorage,
-  getThemeFromLocalStorage,
-  getUserAvatarFromLocalStorage,
-  getUserEmailFromLocalStorage
-} from 'src/utils/auth'
+import { getAccessTokenFromLocalStorage, getThemeFromLocalStorage } from 'src/utils/auth'
+import { getAvatarFromJWT, getEmailFromJWT } from 'src/utils/utils'
 
 interface AppContextInterface {
   isAuthenticated: boolean
@@ -24,9 +19,9 @@ interface AppContextInterface {
 const initialAppContext: AppContextInterface = {
   isAuthenticated: Boolean(getAccessTokenFromLocalStorage()),
   setIsAuthenticated: () => null,
-  userEmail: getUserEmailFromLocalStorage(),
+  userEmail: getEmailFromJWT(getAccessTokenFromLocalStorage() || ''),
   setUserEmail: () => null,
-  userAvatar: getUserAvatarFromLocalStorage() || userImg.defaultAvatar,
+  userAvatar: getAvatarFromJWT(getAccessTokenFromLocalStorage() || ''),
   setUserAvatar: () => null,
   darkTheme: getThemeFromLocalStorage(),
   setDarkTheme: () => null,

@@ -7,6 +7,10 @@ type AuthResponse = {
   user: User
 }
 
+type RefreshTokenResponse = {
+  access_token: string
+}
+
 export const registerAccount = (body: RegisterFormData) => {
   return http.post<SuccessResponse<AuthResponse>>('user/register', body)
 }
@@ -17,4 +21,8 @@ export const login = (body: LoginFormData) => {
 
 export const logout = () => {
   return http.post<SuccessResponse<null>>('user/logout')
+}
+
+export const refreshToken = () => {
+  return http.post<SuccessResponse<RefreshTokenResponse>>('user/refresh-token', {})
 }

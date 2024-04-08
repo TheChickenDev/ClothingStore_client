@@ -49,7 +49,6 @@ export default function Register() {
   }
 
   const onSubmit = (data: RegisterFormData) => {
-    console.log(data)
     registerMutation.mutate(data, {
       onSuccess: (response) => {
         const status = response.data.status

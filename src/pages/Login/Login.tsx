@@ -78,7 +78,7 @@ export default function Login() {
   }, [])
 
   return (
-    <div className='w-full h-full bg-gradient-to-r from-fuchsia-500 to-orange flex justify-center items-center'>
+    <div className='w-full h-full bg-gradient-to-r from-fuchsia-500 to-white flex justify-center items-center'>
       <div className='w-[960px] max-w-[90%] min-h-96 py-40 sm:px-16 rounded-xl sm:flex sm:justify-evenly sm:items-center bg-white my-12'>
         <div className='sm:w-2/5 p-8' ref={imgBoundRef}>
           <img
