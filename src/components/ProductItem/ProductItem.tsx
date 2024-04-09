@@ -1,47 +1,81 @@
 import { faCartPlus, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Product } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
 
-interface ProductItemType {
-  image: string
-  name: string
-  price: number
-  promotionalPrice: number
-  rate: number
-  sold: number
-  styles: Array<string>
-}
+export default function ProductItem({
+  _id,
+  img,
+  name,
+  price,
+  price_before_discount,
+  rating,
+  sold,
+  thumbnail
+}: Product) {
+  const [showStylesBar, setShowStylesBar] = useState<boolean>(false)
+  const [currentImage, setCurrentImage] = useState<string>(img)
+  const [currentThumbnail, setCurrentThumbnail] = useState<number>(0)
+  const imageRef = useRef<HTMLImageElement>(null)
 
-export default function ProductItem({ image, name, price, promotionalPrice, rate, sold, styles }: ProductItemType) {
-  const [showStylesBar, setShowStylesBar] = useState(false)
-
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault()
     setShowStylesBar(true)
   }
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault()
     setShowStylesBar(false)
   }
 
+  const handleChangeImageClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, img: string, index: number) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const imgTag = imageRef.current
+    if (imgTag) {
+      imgTag.style.transform = 'scale(0.75)'
+      imgTag.style.opacity = '0'
+      setTimeout(() => {
+        setCurrentImage(img)
+        setCurrentThumbnail(index)
+        imgTag.style.transform = ''
+        imgTag.style.opacity = ''
+      }, 500)
+    }
+  }
+
   return (
-    <div
-      className='shadow-md rounded-md group'
+    <Link
+      to={`/product/${_id}`}
+      className='block shadow-md rounded-md group'
       onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseLeave={(e) => handleMouseLeave(e)}
     >
       <div className='overflow-hidden relative'>
-        <img src={image} alt='productItem' className='block w-full transition-transform group-hover:scale-125' />
+        <img
+          ref={imageRef}
+          src={currentImage}
+          alt='productItem'
+          className='block w-full transition-all duration-500 group-hover:scale-125'
+        />
         <AnimatePresence>
           {showStylesBar && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <div className='absolute left-0 right-0 bottom-0 bg-white flex justify-center items-center gap-2'>
-                {styles.map((style, index) => (
-                  <button key={index} className='w-8'>
-                    <img src={style} alt='style' className='block w-full' />
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: [100, 0] }}
+              exit={{ opacity: 0, y: [0, 100] }}
+            >
+              <div className='absolute left-0 right-0 bottom-0 bg-white flex justify-center items-center'>
+                {[{ url: img, path: '' }, ...thumbnail].map((style, index) => (
+                  <button
+                    key={index}
+                    className={`w-12 px-1 ${currentThumbnail === index ? 'transition-all border-2 border-yellowPrimary' : ''}`}
+                    onClick={(e) => handleChangeImageClick(e, style.url, index)}
+                  >
+                    <img src={style.url} alt='style' className='block w-full' />
                   </button>
                 ))}
               </div>
@@ -50,19 +84,19 @@ export default function ProductItem({ image, name, price, promotionalPrice, rate
         </AnimatePresence>
       </div>
       <div className='p-2'>
-        <p className='text-md text-center line-clamp-2'>{name}</p>
+        <p className='text-md text-center line-clamp-2 min-h-10'>{name}</p>
       </div>
-      <p className='text-xs text-center line-through'>{formatCurrency(price)}</p>
-      <p className='text-xl font-bold text-center text-greenPrimary'>{formatCurrency(promotionalPrice)}</p>
+      <p className='text-xs text-center line-through'>{formatCurrency(price_before_discount)}</p>
+      <p className='text-xl font-bold text-center text-greenPrimary'>{formatCurrency(price)}</p>
       <div className='flex justify-between items-center px-2 pb-2'>
-        <div className=''>
-          <div className='flex justify-center items-center'>
+        <div>
+          <div className='flex justify-start items-center'>
             {Array(5)
               .fill(0)
               .map((_, index) => {
                 let width = '0'
-                if (rate - index >= 1) width = '100%'
-                else if (rate - index > 0 && rate - index < 1) width = `${(rate - index) * 100}%`
+                if (rating - index >= 1) width = '100%'
+                else if (rating - index > 0 && rating - index < 1) width = `${(rating - index) * 100}%`
                 return (
                   <div key={index} className='relative text-xs'>
                     <div className='text-gray-300'>
@@ -81,6 +115,6 @@ export default function ProductItem({ image, name, price, promotionalPrice, rate
           <FontAwesomeIcon icon={faCartPlus} />
         </button>
       </div>
-    </div>
+    </Link>
   )
 }

@@ -5,12 +5,9 @@ import {
   getAccessTokenFromLocalStorage,
   removeDataFromLocalStorage,
   saveThemeToLocalStorage,
-  saveLanguageToLocalStorage,
-  getRefreshTokenFromLocalStorage
+  saveLanguageToLocalStorage
 } from './auth'
-import { jwtDecode } from 'jwt-decode'
 import languages from 'src/constants/languages'
-import { toast } from 'react-toastify'
 
 class HTTP {
   instance: AxiosInstance
@@ -28,30 +25,6 @@ class HTTP {
     this.instance.interceptors.request.use(
       async (config) => {
         if (config.headers && this.access_token) {
-          const { exp } = jwtDecode(this.access_token)
-          const currentTime = new Date().getTime() / 1000
-          const refreshToken = getRefreshTokenFromLocalStorage()
-          if (exp && exp < currentTime) {
-            await this.instance
-              .post(
-                'user/refresh-token',
-                {},
-                {
-                  headers: {
-                    authorization: refreshToken
-                  },
-                  withCredentials: true
-                }
-              )
-              .then((response) => {
-                const { access_token } = response.data.data
-                saveAccessTokenToLocalStorage(access_token)
-                this.access_token = access_token
-              })
-              .catch((error) => {
-                toast.error(error.response.data.message)
-              })
-          }
           config.headers.authorization = this.access_token
         }
         return config

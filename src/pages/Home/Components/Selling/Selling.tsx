@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom'
 import { getProducts } from 'src/apis/product.api'
 import ProductItem from 'src/components/ProductItem'
 import paths from 'src/constants/paths'
-import { popularProductQueryParams } from 'src/constants/productQueryParams'
+import { topSaleProductQueryParams } from 'src/constants/productQueryParams'
 import { Product } from 'src/types/product.type'
 
-export default function Outstanding() {
+export default function Selling() {
   const { isLoading, data } = useQuery({
-    queryKey: ['products', popularProductQueryParams],
-    queryFn: () => getProducts(popularProductQueryParams)
+    queryKey: ['products', topSaleProductQueryParams],
+    queryFn: () => getProducts(topSaleProductQueryParams)
   })
 
   return (
     <div className='lg:px-32 md:px-16 px-4'>
       <div className='flex justify-start items-center pt-10 pb-4'>
         <span className='w-12 h-1 bg-black mx-2'></span>
-        <p className='text-xl font-bold uppercase'>Sản phẩm nổi bật</p>
+        <p className='text-xl font-bold uppercase'>Sản phẩm bán chạy</p>
       </div>
       <div className='grid md:grid-cols-4 grid-cols-2 gap-4 bg-white py-4 rounded-md'>
         {isLoading ? (

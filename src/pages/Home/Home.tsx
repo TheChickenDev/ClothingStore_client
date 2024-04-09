@@ -1,7 +1,8 @@
 import Carousel from './Components/Carousel'
 import SearchTitle from './Components/Category'
-import News from './Components/News'
+import New from './Components/New'
 import Outstanding from './Components/Outstanding'
+import Selling from './Components/Selling'
 
 export default function Home() {
   return (
@@ -9,7 +10,8 @@ export default function Home() {
       <Carousel />
       <SearchTitle />
       <Outstanding />
-      <News />
+      <New />
+      <Selling />
     </div>
   )
 }

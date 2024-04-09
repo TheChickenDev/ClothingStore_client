@@ -302,12 +302,12 @@ export default function Header() {
           <AnimatePresence>
             {openMobileMenu && (
               <motion.div
-                initial={{ x: 0, opacity: 0 }}
+                initial={{ x: 500, opacity: 0 }}
                 animate={{
-                  x: [300, 0],
+                  x: [500, 0],
                   opacity: 1
                 }}
-                exit={{ x: [0, 0], opacity: 0 }}
+                exit={{ x: [0, 500], opacity: 0 }}
                 className='fixed top-20 left-0 bottom-0 right-0 bg-blackPrimary'
               >
                 <hr />

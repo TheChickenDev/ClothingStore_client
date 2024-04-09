@@ -1,4 +1,4 @@
-export type User = {
+export interface User {
   _id: string
   isAdmin: boolean
   name: string
