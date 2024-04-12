@@ -1,3 +1,3 @@
-import SearchTitle from './Category'
+import Category from './Category'
 
-export default SearchTitle
+export default Category

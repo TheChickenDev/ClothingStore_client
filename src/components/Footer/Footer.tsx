@@ -46,7 +46,9 @@ export default function Footer() {
           </div>
         )}
       </div>
-      <p className='text-center text-white text-sm'>Copyright NEMNEM © 2024</p>
+      <p className='text-center text-white text-sm'>
+        Copyright © 2024 by <span className='text-yellowPrimary'>NEMNEM</span>. All rights reserved.
+      </p>
     </div>
   )
 }

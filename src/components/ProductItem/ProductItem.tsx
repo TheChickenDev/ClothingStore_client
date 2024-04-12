@@ -47,6 +47,12 @@ export default function ProductItem({
     }
   }
 
+  const handleAddToCartClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log('Add to cart')
+  }
+
   return (
     <Link
       to={`/product/${_id}`}
@@ -72,7 +78,7 @@ export default function ProductItem({
                 {[{ url: img, path: '' }, ...thumbnail].map((style, index) => (
                   <button
                     key={index}
-                    className={`w-12 px-1 ${currentThumbnail === index ? 'transition-all border-2 border-yellowPrimary' : ''}`}
+                    className={`w-12 px-1 ${currentThumbnail === index ? 'transition-all border-2 border-pinkPrimary' : ''}`}
                     onClick={(e) => handleChangeImageClick(e, style.url, index)}
                   >
                     <img src={style.url} alt='style' className='block w-full' />
@@ -111,7 +117,10 @@ export default function ProductItem({
           </div>
           <div className=''>{formatNumberToSocialStyle(sold) + ' đã bán'}</div>
         </div>
-        <button className='text-xl px-4 py-1 border rounded-md transition-colors duration-300 hover:text-yellowPrimary'>
+        <button
+          className='text-xl px-4 py-1 border rounded-md transition-colors duration-300 hover:text-pinkPrimary'
+          onClick={(e) => handleAddToCartClick(e)}
+        >
           <FontAwesomeIcon icon={faCartPlus} />
         </button>
       </div>

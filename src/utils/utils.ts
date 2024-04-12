@@ -25,3 +25,39 @@ export const getAvatarFromJWT = (token: string): string => {
   const { avatar } = decodeJWT(token)
   return avatar
 }
+
+export const calculateDifferenceBetweenNowAndFutureDate = (
+  futureDate: string
+): {
+  diffDays: number
+  diffHours: number
+  diffMinutes: number
+  diffSeconds: number
+} => {
+  const expiredDate = new Date(futureDate)
+  const currentDate = new Date()
+  let diffTime = expiredDate.getTime() - currentDate.getTime()
+  if (diffTime <= 0) {
+    return {
+      diffDays: 0,
+      diffHours: 0,
+      diffMinutes: 0,
+      diffSeconds: 0
+    }
+  }
+  diffTime = Math.abs(diffTime)
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+  diffTime = diffTime - diffDays * (1000 * 60 * 60 * 24)
+  const diffHours = Math.floor(diffTime / (1000 * 60 * 60))
+  diffTime = diffTime - diffHours * (1000 * 60 * 60)
+  const diffMinutes = Math.floor(diffTime / (1000 * 60))
+  diffTime = diffTime - diffMinutes * (1000 * 60)
+  const diffSeconds = Math.floor(diffTime / 1000)
+  diffTime = diffTime - diffSeconds * 1000
+  return {
+    diffDays,
+    diffHours,
+    diffMinutes,
+    diffSeconds
+  }
+}

@@ -70,17 +70,17 @@ export default function Header() {
   }
 
   return (
-    <div className='bg-blackPrimary fixed top-0 left-0 right-0 z-50 sm:h-[164px]'>
+    <div className='bg-blackPrimary fixed top-0 left-0 right-0 z-50'>
       {width >= 640 ? (
         <>
-          <div className='flex justify-between items-center m-auto py-4 lg:px-32 md:px-16 px-4'>
+          <div className='flex justify-between items-center m-auto py-2 lg:px-32 md:px-16 px-4'>
             <Link to={paths.home}>
               <img src={logoImg.logo} alt='logo' className='block h-20' />
             </Link>
             <div className='flex justify-center items-center gap-2'>
               <div className='flex justify-center items-center gap-2'>
                 <button
-                  className='text-xl text-white w-8 h-7 hoverChangeTextColor relative'
+                  className='text-xl text-white w-8 h-7 transition-all duration-200 pointer hover:text-[#ffcc00] relative'
                   onClick={handleChangeTheme}
                 >
                   <AnimatePresence>
@@ -109,7 +109,7 @@ export default function Header() {
                   </AnimatePresence>
                 </button>
                 <div
-                  className='flex justify-center items-center text-sm p-3 relative text-white hoverChangeTextColor'
+                  className='flex justify-center items-center text-sm p-3 relative text-white transition-all duration-200 pointer hover:text-[#ffcc00]'
                   onMouseEnter={() => setOpenLanguagePopover(true)}
                   onMouseLeave={() => setOpenLanguagePopover(false)}
                 >
@@ -125,8 +125,8 @@ export default function Header() {
                     </>
                   )}
                   <FontAwesomeIcon icon={faCaretDown} className='ml-2 text-lg' />
-                  <Popover isOpened={openLanguagePopover} position='left'>
-                    <div className='text-black text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
+                  <Popover isOpened={openLanguagePopover} positionX='left' positionY='bottom'>
+                    <div className='text-blackPrimary text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
                       <button
                         className='flex justify-start items-center p-2 hover:bg-yellowPrimary/50 w-full'
                         onClick={() => handleChangeLanguage(languages.vietnamese)}
@@ -149,15 +149,15 @@ export default function Header() {
                 {isAuthenticated ? (
                   <>
                     <div
-                      className='relative py-2 hoverChangeTextColor'
+                      className='relative py-2 transition-all duration-200 pointer hover:text-[#ffcc00]'
                       onMouseEnter={() => setOpenUserPopover(true)}
                       onMouseLeave={() => setOpenUserPopover(false)}
                     >
                       <div className='w-10 h-10 rounded-[50%] overflow-hidden'>
                         <img src={userAvatar} alt='avatar' className='block w-full h-full' />
                       </div>
-                      <Popover isOpened={openUserPopover} position='right'>
-                        <div className='text-black text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
+                      <Popover isOpened={openUserPopover} positionX='right' positionY='bottom'>
+                        <div className='text-blackPrimary text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
                           <p className='w-full p-2'>{userEmail}</p>
                           <hr />
                           <Link
@@ -178,13 +178,13 @@ export default function Header() {
                       </Popover>
                     </div>
                     <div
-                      className='relative py-2 hoverChangeTextColor'
+                      className='relative py-2 transition-all duration-200 pointer hover:text-[#ffcc00]'
                       onMouseEnter={() => setOpenCartPopover(true)}
                       onMouseLeave={() => setOpenCartPopover(false)}
                     >
                       <FontAwesomeIcon icon={faBagShopping} className='text-4xl' />
-                      <Popover isOpened={openCartPopover} position={'right'}>
-                        <div className='text-black text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
+                      <Popover isOpened={openCartPopover} positionX='right' positionY='bottom'>
+                        <div className='text-blackPrimary text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
                           <img src={cartImg.emptyCart} alt='emptyCart' />
                           <p className='w-full text-center p-2'>{'Giỏ hàng trống! :<'}</p>
                         </div>
@@ -193,12 +193,18 @@ export default function Header() {
                   </>
                 ) : (
                   <div className='flex justify-center items-center gap-2'>
-                    <Link to={paths.login} className='flex justify-center items-center py-3 hoverChangeTextColor'>
+                    <Link
+                      to={paths.login}
+                      className='flex justify-center items-center py-3 transition-all duration-200 pointer hover:text-[#ffcc00]'
+                    >
                       <FontAwesomeIcon icon={faRightToBracket} className='mr-2 text-lg' />
                       Đăng nhập
                     </Link>
                     <div className='h-4 w-[1px] bg-white/50'></div>
-                    <Link to={paths.register} className='flex justify-center items-center py-3 hoverChangeTextColor'>
+                    <Link
+                      to={paths.register}
+                      className='flex justify-center items-center py-3 transition-all duration-200 pointer hover:text-[#ffcc00]'
+                    >
                       Đăng ký
                     </Link>
                   </div>
@@ -209,16 +215,16 @@ export default function Header() {
           <hr />
           <div className='flex justify-between items-center m-auto py-2 lg:px-32 md:px-16 px-4'>
             <div className='flex justify-between items-center gap-4 text-white text-sm'>
-              <Link to={paths.home} className='p-2 hoverHeaderBtn'>
+              <Link to={paths.home} className='p-2 headerBtn'>
                 Trang chủ
               </Link>
-              <Link to={paths.about} className='p-2 hoverHeaderBtn'>
+              <Link to={paths.about} className='p-2 headerBtn'>
                 Về chúng tôi
               </Link>
-              <Link to={paths.contact} className='p-2 hoverHeaderBtn'>
+              <Link to={paths.contact} className='p-2 headerBtn'>
                 Liên hệ
               </Link>
-              <Link to={paths.faq} className='p-2 hoverHeaderBtn'>
+              <Link to={paths.faq} className='p-2 headerBtn'>
                 FAQ
               </Link>
             </div>
@@ -228,7 +234,7 @@ export default function Header() {
                 placeholder='Tìm kiếm...'
                 className='w-48 text-sm p-2 outline-none focus:placeholder-yellowPrimary'
               />
-              <button className='p-2 hoverChangeTextColor'>
+              <button className='p-2 transition-all duration-200 pointer hover:text-[#ffcc00]'>
                 <FontAwesomeIcon icon={faMagnifyingGlass} className='text-lg' />
               </button>
             </form>
@@ -241,7 +247,7 @@ export default function Header() {
               <img src={logoImg.logo} alt='logo' className='block h-16' />
             </Link>
             <button
-              className='text-3xl text-white w-12 h-16 absolute top-2 right-14 hoverChangeTextColor'
+              className='text-3xl text-white w-12 h-16 absolute top-2 right-14 transition-all duration-200 pointer hover:text-[#ffcc00]'
               onClick={handleChangeTheme}
             >
               <AnimatePresence>
@@ -270,7 +276,7 @@ export default function Header() {
               </AnimatePresence>
             </button>
             <button
-              className='text-3xl text-white w-12 h-16 absolute top-2 right-0 hoverChangeTextColor'
+              className='text-3xl text-white w-12 h-16 absolute top-2 right-0 transition-all duration-200 pointer hover:text-[#ffcc00]'
               onClick={() => setOpenMobileMenu(!openMobileMenu)}
             >
               <AnimatePresence>
@@ -319,7 +325,7 @@ export default function Header() {
                           <p className='text-sm'>{userEmail}</p>
                         </div>
                         <div
-                          className='relative py-2 hoverChangeTextColor'
+                          className='relative py-2 transition-all duration-200 pointer hover:text-[#ffcc00]'
                           onMouseEnter={() => setOpenCartPopover(true)}
                           onMouseLeave={() => setOpenCartPopover(false)}
                         >
@@ -328,12 +334,15 @@ export default function Header() {
                       </div>
                       <hr />
                       <div className='flex justify-between items-center w-full'>
-                        <Link to={paths.profile} className='flex justify-start items-center py-2 hoverChangeTextColor'>
+                        <Link
+                          to={paths.profile}
+                          className='flex justify-start items-center py-2 transition-all duration-200 pointer hover:text-[#ffcc00]'
+                        >
                           <FontAwesomeIcon icon={faUser} className='text-lg mr-2' />
                           Hồ sơ của tôi
                         </Link>
                         <button
-                          className='flex justify-start items-center py-2 hoverChangeTextColor'
+                          className='flex justify-start items-center py-2 transition-all duration-200 pointer hover:text-[#ffcc00]'
                           onClick={handleLogout}
                         >
                           Đăng xuất
@@ -343,11 +352,17 @@ export default function Header() {
                     </>
                   ) : (
                     <div className='flex justify-between items-center'>
-                      <Link to={paths.login} className='flex justify-center items-center py-3 hoverChangeTextColor'>
+                      <Link
+                        to={paths.login}
+                        className='flex justify-center items-center py-3 transition-all duration-200 pointer hover:text-[#ffcc00]'
+                      >
                         <FontAwesomeIcon icon={faRightToBracket} className='mr-2 text-lg' />
                         Đăng nhập
                       </Link>
-                      <Link to={paths.register} className='flex justify-center items-center py-3 hoverChangeTextColor'>
+                      <Link
+                        to={paths.register}
+                        className='flex justify-center items-center py-3 transition-all duration-200 pointer hover:text-[#ffcc00]'
+                      >
                         <FontAwesomeIcon icon={faUserPlus} className='mr-2 text-lg' />
                         Đăng ký
                       </Link>
@@ -359,7 +374,7 @@ export default function Header() {
                   <p className='text-sm'>Ngôn ngữ</p>
                   {language === languages.vietnamese ? (
                     <button
-                      className='hoverChangeTextColor'
+                      className='transition-all duration-200 pointer hover:text-[#ffcc00]'
                       onClick={() => setOpenMobileLanguagePopover(!openMobileLanguagePopover)}
                     >
                       <FontAwesomeIcon icon={faEarthAsia} className='mr-2 text-lg' />
@@ -368,7 +383,7 @@ export default function Header() {
                     </button>
                   ) : (
                     <button
-                      className='hoverChangeTextColor'
+                      className='transition-all duration-200 pointer hover:text-[#ffcc00]'
                       onClick={() => setOpenMobileLanguagePopover(!openMobileLanguagePopover)}
                     >
                       <FontAwesomeIcon icon={faEarthEurope} className='mr-2 text-lg' />
@@ -377,10 +392,10 @@ export default function Header() {
                     </button>
                   )}
                   <PopoverMobile isOpened={openMobileLanguagePopover}>
-                    <div className='text-black text-left'>
-                      <div className='text-end border-b-2 border-b-black/30'>
+                    <div className='text-blackPrimary text-left'>
+                      <div className='text-end border-b-2 border-b-blackPrimary/30'>
                         <button
-                          className='p-4 text-black text-4xl hoverChangeTextColor'
+                          className='p-4 text-blackPrimary text-4xl transition-all duration-200 pointer hover:text-[#ffcc00]'
                           onClick={() => setOpenMobileLanguagePopover(false)}
                         >
                           <FontAwesomeIcon icon={faXmark} />
@@ -405,16 +420,16 @@ export default function Header() {
                 </div>
                 <hr />
                 <div className='text-white mb-2'>
-                  <Link to={paths.home} className='block w-full px-6 py-3 hoverHeaderBtn'>
+                  <Link to={paths.home} className='block w-full px-6 py-3 headerBtn'>
                     Trang chủ
                   </Link>
-                  <Link to={paths.about} className='block w-full px-6 py-3 hoverHeaderBtn'>
+                  <Link to={paths.about} className='block w-full px-6 py-3 headerBtn'>
                     Về chúng tôi
                   </Link>
-                  <Link to={paths.contact} className='block w-full px-6 py-3 hoverHeaderBtn'>
+                  <Link to={paths.contact} className='block w-full px-6 py-3 headerBtn'>
                     Liên hệ
                   </Link>
-                  <Link to={paths.faq} className='block w-full px-6 py-3 hoverHeaderBtn'>
+                  <Link to={paths.faq} className='block w-full px-6 py-3 headerBtn'>
                     FAQ
                   </Link>
                 </div>
@@ -425,7 +440,7 @@ export default function Header() {
                     placeholder='Tìm kiếm...'
                     className='w-full text-lg p-3 outline-none focus:placeholder-yellowPrimary'
                   />
-                  <button className='p-3 hoverChangeTextColor'>
+                  <button className='p-3 transition-all duration-200 pointer hover:text-[#ffcc00]'>
                     <FontAwesomeIcon icon={faMagnifyingGlass} className='text-xl' />
                   </button>
                 </form>

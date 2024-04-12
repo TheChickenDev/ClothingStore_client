@@ -11,7 +11,11 @@ import jacket from './category/jacket.png'
 import men from './category/men.png'
 import unisex from './category/unisex.png'
 import women from './category/women.png'
-import defaultAvatar from './user/defaultAvatar.png'
+import defaultAvatar from './user/defaultAvatar.jpg'
+import augustVoucher from './voucher/augustVoucher.jpg'
+import winterVoucher from './voucher/winterVoucher.jpg'
+import summerVoucher from './voucher/summerVoucher.jpg'
+import januaryVoucher from './voucher/januaryVoucher.jpg'
 
 export const logoImg = {
   logo
@@ -43,4 +47,11 @@ export const categoryImg = {
 
 export const userImg = {
   defaultAvatar
+}
+
+export const voucherImg = {
+  augustVoucher,
+  winterVoucher,
+  summerVoucher,
+  januaryVoucher
 }

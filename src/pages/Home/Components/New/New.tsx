@@ -1,55 +1,44 @@
 import { useQuery } from '@tanstack/react-query'
-import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { getProducts } from 'src/apis/product.api'
 import ProductItem from 'src/components/ProductItem'
-import paths from 'src/constants/paths'
 import { latestProductQueryParams } from 'src/constants/productQueryParams'
 import { Product } from 'src/types/product.type'
 
-export default function New() {
+export default function New({ categoryShowedIndex }: { categoryShowedIndex: number }) {
   const { isLoading, data } = useQuery({
     queryKey: ['products', latestProductQueryParams],
     queryFn: () => getProducts(latestProductQueryParams)
   })
 
-  console.log(data)
-
   return (
-    <div className='lg:px-32 md:px-16 px-4'>
-      <div className='flex justify-start items-center pt-10 pb-4'>
-        <span className='w-12 h-1 bg-black mx-2'></span>
-        <p className='text-xl font-bold uppercase'>Sản phẩm mới</p>
-      </div>
-      <div className='grid md:grid-cols-4 grid-cols-2 gap-4 bg-white py-4 rounded-md'>
-        {isLoading ? (
-          <div>Is Loading....</div>
-        ) : (
-          <>
-            {data?.data.data.productList.map((product: Product, index: number) => (
-              <div key={index}>
-                <ProductItem
-                  _id={product._id}
-                  img={product.img}
-                  name={product.name}
-                  price={product.price}
-                  price_before_discount={product.price_before_discount}
-                  rating={product.rating}
-                  sold={product.sold}
-                  thumbnail={product.thumbnail}
-                />
-              </div>
-            ))}
-            <div className='col-span-full flex justify-center items-center py-4'>
-              <Link
-                to={paths.productList}
-                className='block bg-greenPrimary text-white rounded-md p-4 hoverChangeTextColor'
-              >
-                Xem tất cả
-              </Link>
+    categoryShowedIndex === 2 && (
+      <motion.div initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: [200, 0] }}>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-white py-2'>
+          {isLoading ? (
+            <div className='col-span-1 sm:col-span-2 lg:col-span-4 min-h-96 flex justify-center items-center'>
+              <div className='loader'></div>
             </div>
-          </>
-        )}
-      </div>
-    </div>
+          ) : (
+            <>
+              {data?.data.data.productList.map((product: Product, index: number) => (
+                <div key={index}>
+                  <ProductItem
+                    _id={product._id}
+                    img={product.img}
+                    name={product.name}
+                    price={product.price}
+                    price_before_discount={product.price_before_discount}
+                    rating={product.rating}
+                    sold={product.sold}
+                    thumbnail={product.thumbnail}
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+      </motion.div>
+    )
   )
 }

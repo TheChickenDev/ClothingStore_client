@@ -74,7 +74,7 @@ export default function Register() {
   }
 
   return (
-    <div className='w-full h-full bg-gradient-to-r from-fuchsia-500 to-white flex justify-center items-center'>
+    <div className='w-full h-full bg-gradient-to-r from-pinkPrimary/70 to-white flex justify-center items-center'>
       <div className='w-[960px] max-w-[90%] min-h-96 py-24 sm:px-16 rounded-xl bg-white my-12'>
         <p className='text-2xl font-bold mb-2 col-span-2 text-center'>Đăng ký</p>
         <form onSubmit={handleSubmit(onSubmit)} className='md:flex flex-wrap flex-auto'>
@@ -158,16 +158,22 @@ export default function Register() {
               )}
             </div>
           </div>
-          <div className='md:w-1/2 w-full px-2'>
-            <img src={userImg.defaultAvatar} alt='avatar' ref={avatarRef} className='w-full' />
+          <div className='md:w-1/2 w-full px-2 text-center'>
+            <img src={userImg.defaultAvatar} alt='avatar' ref={avatarRef} className='w-full aspect-square' />
             <div>
               <input
-                className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+                className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg hidden'
+                id='avatar'
                 type='file'
                 multiple={false}
                 {...register('avatar')}
                 onChange={(e) => onFileSelected(e)}
               />
+              <label htmlFor='avatar' className='hover:text-pinkPrimary cursor-pointer p-2'>
+                Nhấn vào đây để chọn ảnh đại diện
+                <br></br>
+                (không bắt buộc)
+              </label>
               <div className='min-h-5'>
                 {errors.avatar && (
                   <p className='text-red-700 text-start ml-4' role='alert'>
@@ -178,12 +184,21 @@ export default function Register() {
             </div>
           </div>
           <div className='w-full px-2 mt-2'>
-            <button className='w-full px-6 py-3 bg-greenPrimary rounded-3xl text-xl text-white hover:bg-greenPrimary/90 col-span-2'>
-              Đăng ký
+            <button
+              className='w-full px-6 py-3 bg-greenPrimary rounded-3xl text-xl text-white hover:bg-greenPrimary/90 col-span-2'
+              disabled={registerMutation.isPending}
+            >
+              {registerMutation.isPending ? (
+                <div className='w-full flex justify-center items-center'>
+                  <div className='loader'></div>
+                </div>
+              ) : (
+                'Đăng ký'
+              )}
             </button>
             <p className='text-center col-span-2 mt-2'>
               <span className='text-sm'>Đã có tài khoản? </span>
-              <Link to={paths.login} className='text-sm text-red-700 hover:text-greenPrimary'>
+              <Link to={paths.login} className='text-sm text-pinkPrimary hover:text-greenPrimary'>
                 Đăng nhập <FontAwesomeIcon icon={faSignIn} />
               </Link>
             </p>
