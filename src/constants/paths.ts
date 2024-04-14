@@ -5,9 +5,8 @@ const paths = {
   profile: '/profile',
   about: '/about',
   contact: '/contact',
-  faq: '/faq',
-  productList: '/products',
-  productDetail: '/product/:id'
+  shop: '/shop',
+  product: '/product/:id'
 } as const
 
 export default paths

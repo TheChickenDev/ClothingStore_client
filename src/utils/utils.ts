@@ -33,6 +33,7 @@ export const calculateDifferenceBetweenNowAndFutureDate = (
   diffHours: number
   diffMinutes: number
   diffSeconds: number
+  isExpired: boolean
 } => {
   const expiredDate = new Date(futureDate)
   const currentDate = new Date()
@@ -42,7 +43,8 @@ export const calculateDifferenceBetweenNowAndFutureDate = (
       diffDays: 0,
       diffHours: 0,
       diffMinutes: 0,
-      diffSeconds: 0
+      diffSeconds: 0,
+      isExpired: true
     }
   }
   diffTime = Math.abs(diffTime)
@@ -58,6 +60,7 @@ export const calculateDifferenceBetweenNowAndFutureDate = (
     diffDays,
     diffHours,
     diffMinutes,
-    diffSeconds
+    diffSeconds,
+    isExpired: false
   }
 }

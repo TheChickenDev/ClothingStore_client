@@ -78,7 +78,7 @@ export default function Login() {
   }, [])
 
   return (
-    <div className='w-full h-full bg-gradient-to-r from-pinkPrimary/70 to-white flex justify-center items-center'>
+    <div className='w-full h-full bg-gradient-to-r from-pink-primary/70 to-white flex justify-center items-center'>
       <div className='w-[960px] max-w-[90%] min-h-96 py-40 sm:px-16 rounded-xl sm:flex sm:justify-evenly sm:items-center bg-white my-12'>
         <div className='sm:w-2/5 p-8' ref={imgBoundRef}>
           <img
@@ -92,7 +92,7 @@ export default function Login() {
           <p className='text-2xl font-bold mb-2'>Đăng nhập</p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
-              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='text'
               placeholder='Email'
               {...register('email')}
@@ -105,7 +105,7 @@ export default function Login() {
               )}
             </div>
             <input
-              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='password'
               placeholder='Mật khẩu'
               {...register('password')}
@@ -118,7 +118,7 @@ export default function Login() {
               )}
             </div>
             <button
-              className='w-full min-h-14 px-6 py-3 mt-2 bg-greenPrimary rounded-3xl text-xl text-white text-center'
+              className='w-full min-h-14 px-6 py-3 mt-2 bg-green-primary rounded-3xl text-xl text-white text-center'
               disabled={loginMutation.isPending}
             >
               {loginMutation.isPending ? (
@@ -131,12 +131,12 @@ export default function Login() {
             </button>
           </form>
           <p className='my-2'>
-            <Link to={paths.home} className='text-sm text-gray-700 hover:text-greenPrimary'>
+            <Link to={paths.home} className='text-sm text-gray-700 hover:text-green-primary'>
               Quên mật khẩu?
             </Link>
           </p>
           <p className='my-2'>
-            <Link to={paths.register} className='text-sm text-gray-700 hover:text-greenPrimary'>
+            <Link to={paths.register} className='text-sm text-gray-700 hover:text-green-primary'>
               Tạo tài khoản mới <FontAwesomeIcon icon={faArrowRight} />
             </Link>
           </p>

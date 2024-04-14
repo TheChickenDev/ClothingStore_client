@@ -21,7 +21,7 @@ export interface Product {
 }
 
 export interface ProductList {
-  productList: Array<Product>
+  shop: Array<Product>
   currentPage: number
   totalPage: number
 }

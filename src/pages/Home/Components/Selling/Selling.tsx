@@ -21,7 +21,7 @@ export default function Selling({ categoryShowedIndex }: { categoryShowedIndex: 
             </div>
           ) : (
             <>
-              {data?.data.data.productList.map((product: Product, index: number) => (
+              {data?.data.data.shop.map((product: Product, index: number) => (
                 <div key={index}>
                   <ProductItem
                     _id={product._id}

@@ -4,10 +4,14 @@ import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import DefaultLayout from 'src/components/DefaultLayout'
 import paths from 'src/constants/paths'
 import { AppContext } from 'src/contexts/app.context'
+import About from 'src/pages/About'
+import Contact from 'src/pages/Contact'
 import Home from 'src/pages/Home'
 import Login from 'src/pages/Login'
+import Product from 'src/pages/Product'
 import Profile from 'src/pages/Profile'
 import Register from 'src/pages/Register'
+import Shop from 'src/pages/Shop'
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useContext(AppContext)
@@ -25,6 +29,39 @@ const routes: RouteObject[] = [
     element: (
       <DefaultLayout>
         <Home />
+      </DefaultLayout>
+    ),
+    index: true
+  },
+  {
+    path: paths.shop,
+    element: (
+      <DefaultLayout>
+        <Shop />
+      </DefaultLayout>
+    )
+  },
+  {
+    path: paths.product,
+    element: (
+      <DefaultLayout>
+        <Product />
+      </DefaultLayout>
+    )
+  },
+  {
+    path: paths.about,
+    element: (
+      <DefaultLayout>
+        <About />
+      </DefaultLayout>
+    )
+  },
+  {
+    path: paths.contact,
+    element: (
+      <DefaultLayout>
+        <Contact />
       </DefaultLayout>
     )
   },

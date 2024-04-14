@@ -6,6 +6,8 @@ import New from './Components/New'
 import Outstanding from './Components/Outstanding'
 import Selling from './Components/Selling'
 import Voucher from './Components/Voucher'
+import { Link } from 'react-router-dom'
+import paths from 'src/constants/paths'
 
 export default function Home() {
   const [categoryIndex, setCategoryIndex] = useState<number>(0)
@@ -14,25 +16,25 @@ export default function Home() {
   const handleCategoryBtnClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
     e.preventDefault()
     const categoryBtns = categoryBtnListRef.current?.children
-    categoryBtns?.item(categoryIndex)?.classList.remove('text-pinkPrimary')
+    categoryBtns?.item(categoryIndex)?.classList.remove('text-pink-primary')
     setCategoryIndex(index)
   }
 
   useEffect(() => {
     const categoryBtns = categoryBtnListRef.current?.children
-    categoryBtns?.item(categoryIndex)?.classList.add('text-pinkPrimary')
+    categoryBtns?.item(categoryIndex)?.classList.add('text-pink-primary')
   }, [categoryIndex])
 
   return (
-    <div className='sm:mt-[148px] mt-20 '>
+    <div className='mt-24'>
       <Carousel />
       <div className='lg:px-32 md:px-16 px-4'>
-        <div className='pl-4 mt-12 mb-4 border-l-4 border-l-pinkPrimary'>
+        <div className='pl-4 mt-12 mb-4 border-l-4 border-l-pink-primary'>
           <p className='text-xl font-bold uppercase'>Bạn đang tìm kiếm?</p>
         </div>
         <Category />
         <div className='sm:flex sm:justify-between sm:items-center mt-12 mb-4'>
-          <div className='pl-4 border-l-4 border-l-pinkPrimary'>
+          <div className='pl-4 border-l-4 border-l-pink-primary'>
             <p className='text-xl font-bold uppercase'>Sản phẩm phổ biến</p>
           </div>
           <div
@@ -50,7 +52,7 @@ export default function Home() {
                     initial={{ x: -200 }}
                     animate={{ x: [-200, 0], transition: { duration: 0.5 } }}
                     exit={{ x: [0, 200], transition: { duration: 1.5 } }}
-                    className='absolute bottom-0 left-0 right-0 h-[2px] bg-pinkPrimary'
+                    className='absolute bottom-0 left-0 right-0 h-[2px] bg-pink-primary'
                   >
                     <div></div>
                   </motion.div>
@@ -68,7 +70,7 @@ export default function Home() {
                     initial={{ x: -200 }}
                     animate={{ x: [-200, 0], transition: { duration: 0.5 } }}
                     exit={{ x: [0, 200], transition: { duration: 1.5 } }}
-                    className='absolute bottom-0 left-0 right-0 h-[2px] bg-pinkPrimary'
+                    className='absolute bottom-0 left-0 right-0 h-[2px] bg-pink-primary'
                   >
                     <div></div>
                   </motion.div>
@@ -86,7 +88,7 @@ export default function Home() {
                     initial={{ x: -200 }}
                     animate={{ x: [-200, 0], transition: { duration: 0.5 } }}
                     exit={{ x: [0, 200], transition: { duration: 1.5 } }}
-                    className='absolute bottom-0 left-0 right-0 h-[2px] bg-pinkPrimary'
+                    className='absolute bottom-0 left-0 right-0 h-[2px] bg-pink-primary'
                   >
                     <div></div>
                   </motion.div>
@@ -98,8 +100,16 @@ export default function Home() {
         <Outstanding categoryShowedIndex={categoryIndex} />
         <Selling categoryShowedIndex={categoryIndex} />
         <New categoryShowedIndex={categoryIndex} />
-        <div className='pl-4 mt-12 mb-4 border-l-4 border-l-pinkPrimary'>
-          <p className='text-xl font-bold uppercase'>Chương trình giảm giá</p>
+        <div className='sm:flex sm:justify-between sm:items-center mt-12 mb-4'>
+          <div className='pl-4 border-l-4 border-l-pink-primary'>
+            <p className='text-xl font-bold uppercase'>Chương trình giảm giá</p>
+          </div>
+          <Link
+            to={paths.shop}
+            className='block text-green w-36 text-center text-sm text-white p-4 bg-pink-primary mt-4 sm:mt-0 hover:bg-purple-primary transition-colors duration-300'
+          >
+            Mua ngay
+          </Link>
         </div>
         <Voucher />
       </div>

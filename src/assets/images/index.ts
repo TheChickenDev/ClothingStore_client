@@ -16,9 +16,15 @@ import augustVoucher from './voucher/augustVoucher.jpg'
 import winterVoucher from './voucher/winterVoucher.jpg'
 import summerVoucher from './voucher/summerVoucher.jpg'
 import januaryVoucher from './voucher/januaryVoucher.jpg'
+import premium from './voucher/premium.jpg'
+import headerMobileBg from './header/mobileHeaderBg.webp'
 
 export const logoImg = {
   logo
+}
+
+export const headerImg = {
+  headerMobileBg
 }
 
 export const loginImg = {
@@ -53,5 +59,6 @@ export const voucherImg = {
   augustVoucher,
   winterVoucher,
   summerVoucher,
-  januaryVoucher
+  januaryVoucher,
+  premium
 }

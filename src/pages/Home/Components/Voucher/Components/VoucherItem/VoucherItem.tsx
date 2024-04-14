@@ -12,22 +12,24 @@ type VoucherItemProps = {
 }
 
 export default function VoucherItem({ image, name, percent, expiredAt, condition, code }: VoucherItemProps) {
-  const [expiredAtAbout, setExpiredAtAbout] = useState<{
+  const [expiredTime, setExpiredAtAbout] = useState<{
     diffDays: number
     diffHours: number
     diffMinutes: number
     diffSeconds: number
-  }>({ diffDays: 0, diffHours: 0, diffMinutes: 0, diffSeconds: 0 })
+    isExpired: boolean
+  }>({ diffDays: 0, diffHours: 0, diffMinutes: 0, diffSeconds: 0, isExpired: false })
   const [conditionPopup, setConditionPopup] = useState<boolean>(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const { diffDays, diffHours, diffMinutes, diffSeconds } = calculateDifferenceBetweenNowAndFutureDate(expiredAt)
-      setExpiredAtAbout({ diffDays, diffHours, diffMinutes, diffSeconds })
+      const { diffDays, diffHours, diffMinutes, diffSeconds, isExpired } =
+        calculateDifferenceBetweenNowAndFutureDate(expiredAt)
+      setExpiredAtAbout({ diffDays, diffHours, diffMinutes, diffSeconds, isExpired })
     }, 1000)
     return () => clearTimeout(timer)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [expiredAtAbout])
+  }, [expiredTime])
 
   const handleMouseEnterConditionBlock = () => {
     setConditionPopup(true)
@@ -37,8 +39,19 @@ export default function VoucherItem({ image, name, percent, expiredAt, condition
     setConditionPopup(false)
   }
 
+  const handleCopyCouponClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    navigator.clipboard.writeText(code)
+    const element = e.currentTarget
+    element.innerText = 'Copied!'
+    const timer = setTimeout(() => {
+      element.innerText = code
+    }, 3000)
+    return () => clearTimeout(timer)
+  }
+
   return (
-    <div className='sm:flex sm:justify-between sm:items-center gap-2 p-4 border-2 border-grayBorder relative'>
+    <div className='sm:flex sm:justify-between sm:items-center gap-2 p-4 border-2 border-gray-border relative'>
       <div className='flex justify-start items-center w-3/4'>
         <div className='w-32 h-32 mr-4'>
           <img src={image} alt={name} className='block w-full h-full' />
@@ -51,22 +64,22 @@ export default function VoucherItem({ image, name, percent, expiredAt, condition
           </p>
           <div className='flex justify-start items-center gap-4 text-xs'>
             <div className=''>
-              <p>{expiredAtAbout.diffDays}</p>
+              <p>{expiredTime.diffDays}</p>
               <p>DAY</p>
             </div>
             <div className='h-4 border-l border-gray-300' />
             <div className=''>
-              <p>{expiredAtAbout.diffHours}</p>
+              <p>{expiredTime.diffHours}</p>
               <p>HRS</p>
             </div>
             <div className='h-4 border-l border-gray-300' />
             <div className=''>
-              <p>{expiredAtAbout.diffMinutes}</p>
+              <p>{expiredTime.diffMinutes}</p>
               <p>MIN</p>
             </div>
             <div className='h-4 border-l border-gray-300' />
             <div className=''>
-              <p>{expiredAtAbout.diffSeconds}</p>
+              <p>{expiredTime.diffSeconds}</p>
               <p>SEC</p>
             </div>
           </div>
@@ -79,15 +92,24 @@ export default function VoucherItem({ image, name, percent, expiredAt, condition
           onMouseLeave={handleMouseLeaveConditionBlock}
         >
           <p>
-            Coupon <span className='text-greenPrimary'>Active</span>
+            Coupon{' '}
+            <span className={`${expiredTime.isExpired ? 'text-red-500' : 'text-green-primary'}`}>
+              {expiredTime.isExpired ? 'Inactive' : 'Active'}
+            </span>
           </p>
           <Popover isOpened={conditionPopup} positionX='right' positionY='top'>
             <div className='min-w-80 bg-white rounded-md shadow-lg p-4'>{'*' + condition}</div>
           </Popover>
         </div>
-        <button className='p-4 border-dashed border-2 border-greenBold text-greenBold bg-greenBold/10'>{code}</button>
+        <button
+          className='p-4 border-dashed border-2 border-green-bold text-green-bold bg-green-bold/10 hover:opacity-70'
+          onClick={(e) => handleCopyCouponClick(e)}
+          disabled={expiredTime.isExpired}
+        >
+          {code}
+        </button>
       </div>
-      <span className='voucherItem_border'></span>
+      <span className='voucher-item-border'></span>
     </div>
   )
 }

@@ -78,7 +78,7 @@ export default function ProductItem({
                 {[{ url: img, path: '' }, ...thumbnail].map((style, index) => (
                   <button
                     key={index}
-                    className={`w-12 px-1 ${currentThumbnail === index ? 'transition-all border-2 border-pinkPrimary' : ''}`}
+                    className={`w-12 px-1 ${currentThumbnail === index ? 'transition-all border-2 border-pink-primary' : ''}`}
                     onClick={(e) => handleChangeImageClick(e, style.url, index)}
                   >
                     <img src={style.url} alt='style' className='block w-full' />
@@ -93,7 +93,7 @@ export default function ProductItem({
         <p className='text-md text-center line-clamp-2 min-h-10'>{name}</p>
       </div>
       <p className='text-xs text-center line-through'>{formatCurrency(price_before_discount)}</p>
-      <p className='text-xl font-bold text-center text-greenPrimary'>{formatCurrency(price)}</p>
+      <p className='text-xl font-bold text-center text-green-primary'>{formatCurrency(price)}</p>
       <div className='flex justify-between items-center px-2 pb-2'>
         <div>
           <div className='flex justify-start items-center'>
@@ -108,7 +108,7 @@ export default function ProductItem({
                     <div className='text-gray-300'>
                       <FontAwesomeIcon icon={faStar} />
                     </div>
-                    <div className='text-yellowPrimary absolute top-0 left-0 overflow-hidden' style={{ width: width }}>
+                    <div className='text-yellow-primary absolute top-0 left-0 overflow-hidden' style={{ width: width }}>
                       <FontAwesomeIcon icon={faStar} />
                     </div>
                   </div>
@@ -118,7 +118,7 @@ export default function ProductItem({
           <div className=''>{formatNumberToSocialStyle(sold) + ' đã bán'}</div>
         </div>
         <button
-          className='text-xl px-4 py-1 border rounded-md transition-colors duration-300 hover:text-pinkPrimary'
+          className='text-xl px-4 py-1 border rounded-md transition-colors duration-300 hover:text-pink-primary'
           onClick={(e) => handleAddToCartClick(e)}
         >
           <FontAwesomeIcon icon={faCartPlus} />

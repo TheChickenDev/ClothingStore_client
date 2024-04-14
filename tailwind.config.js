@@ -5,15 +5,16 @@ export const content = ['./index.html', './src/**/*.{js,ts,jsx,tsx}']
 export const theme = {
   extend: {
     colors: {
-      greenPrimary: '#57b846',
-      greenBold: '#008080',
+      'green-primary': '#57b846',
+      'green-bold': '#008080',
       main: '#f53d2d',
-      yellowPrimary: '#ffcc00',
-      grayLayer: 'rgba(0, 0, 0, 0.3)',
-      grayPrimary: '#f1f1f1',
-      grayBorder: '#eaeaef',
-      blackPrimary: '#1d1e23',
-      pinkPrimary: '#f50963'
+      'yellow-primary': '#ffcc00',
+      'gray-primary': '#f1f1f1',
+      'gray-border': '#eaeaef',
+      'black-primary': '#1d1e23',
+      'black-layer': '#03041c',
+      'pink-primary': '#f50963',
+      'purple-primary': '#6364db'
     }
   }
 }

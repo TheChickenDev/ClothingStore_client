@@ -74,13 +74,13 @@ export default function Register() {
   }
 
   return (
-    <div className='w-full h-full bg-gradient-to-r from-pinkPrimary/70 to-white flex justify-center items-center'>
+    <div className='w-full h-full bg-gradient-to-r from-pink-primary/70 to-white flex justify-center items-center'>
       <div className='w-[960px] max-w-[90%] min-h-96 py-24 sm:px-16 rounded-xl bg-white my-12'>
         <p className='text-2xl font-bold mb-2 col-span-2 text-center'>Đăng ký</p>
         <form onSubmit={handleSubmit(onSubmit)} className='md:flex flex-wrap flex-auto'>
           <div className='md:w-1/2 w-full px-2'>
             <input
-              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='text'
               placeholder='Họ và tên'
               {...register('name')}
@@ -93,7 +93,7 @@ export default function Register() {
               )}
             </div>
             <input
-              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='text'
               placeholder='Email'
               {...register('email')}
@@ -106,7 +106,7 @@ export default function Register() {
               )}
             </div>
             <input
-              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='password'
               placeholder='Mật khẩu'
               {...register('password')}
@@ -119,7 +119,7 @@ export default function Register() {
               )}
             </div>
             <input
-              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='password'
               placeholder='Nhập lại mật khẩu'
               {...register('confirm_password')}
@@ -132,7 +132,7 @@ export default function Register() {
               )}
             </div>
             <input
-              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='text'
               placeholder='Số điện thoại'
               {...register('phone')}
@@ -145,7 +145,7 @@ export default function Register() {
               )}
             </div>
             <textarea
-              className='w-full resize-none px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-greenPrimary'
+              className='w-full resize-none px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               placeholder='Địa chỉ'
               {...register('address')}
               onKeyDown={(event) => handleTextAreaEnter(event)}
@@ -169,7 +169,7 @@ export default function Register() {
                 {...register('avatar')}
                 onChange={(e) => onFileSelected(e)}
               />
-              <label htmlFor='avatar' className='hover:text-pinkPrimary cursor-pointer p-2'>
+              <label htmlFor='avatar' className='hover:text-pink-primary cursor-pointer p-2'>
                 Nhấn vào đây để chọn ảnh đại diện
                 <br></br>
                 (không bắt buộc)
@@ -185,7 +185,7 @@ export default function Register() {
           </div>
           <div className='w-full px-2 mt-2'>
             <button
-              className='w-full px-6 py-3 bg-greenPrimary rounded-3xl text-xl text-white hover:bg-greenPrimary/90 col-span-2'
+              className='w-full px-6 py-3 bg-green-primary rounded-3xl text-xl text-white hover:bg-green-primary/90 col-span-2'
               disabled={registerMutation.isPending}
             >
               {registerMutation.isPending ? (
@@ -198,7 +198,7 @@ export default function Register() {
             </button>
             <p className='text-center col-span-2 mt-2'>
               <span className='text-sm'>Đã có tài khoản? </span>
-              <Link to={paths.login} className='text-sm text-pinkPrimary hover:text-greenPrimary'>
+              <Link to={paths.login} className='text-sm text-pink-primary hover:text-green-primary'>
                 Đăng nhập <FontAwesomeIcon icon={faSignIn} />
               </Link>
             </p>

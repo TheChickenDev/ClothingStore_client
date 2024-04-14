@@ -9,11 +9,11 @@ import paths from 'src/constants/paths'
 export default function Footer() {
   const { isAuthenticated, userEmail } = useContext(AppContext)
   return (
-    <div className='bg-gradient-to-t from-blackPrimary to-white w-full px-4 py-10'>
-      <div className='flex justify-center items-center text-white text-3xl gap-4'>
+    <div className='bg-white w-full px-4 py-10 border-t'>
+      <div className='flex justify-center items-center text-gray-500 text-3xl gap-4'>
         <a
           href='https://www.facebook.com/nam.nguyens.359'
-          className='p-4 hover:opacity-80'
+          className='p-2 m-2 hover:text-purple-primary'
           target='_blank'
           rel='noreferrer'
         >
@@ -21,18 +21,18 @@ export default function Footer() {
         </a>
         <a
           href='https://www.facebook.com/nam.nguyens.359'
-          className='p-4 hover:opacity-80'
+          className='p-2 m-2 hover:text-purple-primary'
           target='_blank'
           rel='noreferrer'
         >
           <FontAwesomeIcon icon={faFacebook} />
         </a>
       </div>
-      <div className='m-auto pb-4 text-white text-center'>
+      <div className='m-auto pb-4 text-black text-center'>
         {(isAuthenticated && (
           <>
             <span>Hello! </span>
-            <Link to={paths.profile} className='text-center text-sm text-yellowPrimary'>
+            <Link to={paths.profile} className='text-center text-sm text-pink-primary hover:text-purple-primary'>
               {userEmail}
             </Link>
           </>
@@ -40,14 +40,15 @@ export default function Footer() {
           <div className='text-center'>
             <p className='inline-block'>Bạn chưa đăng nhập.</p>
             &nbsp;
-            <Link to={paths.login} className='inline-block'>
+            <Link to={paths.login} className='inline-block text-pink-primary hover:text-purple-primary'>
               (Nhấn vào đây để đăng nhập)
             </Link>
           </div>
         )}
       </div>
-      <p className='text-center text-white text-sm'>
-        Copyright © 2024 by <span className='text-yellowPrimary'>NEMNEM</span>. All rights reserved.
+      <p className='text-center text-black text-sm'>
+        Copyright © 2024 by <span className='text-pink-primary hover:text-purple-primary'>NEM</span>. All rights
+        reserved.
       </p>
     </div>
   )
