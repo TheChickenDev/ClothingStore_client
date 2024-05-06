@@ -105,7 +105,10 @@ export default function Home() {
             <p className='text-xl font-bold uppercase'>Chương trình giảm giá</p>
           </div>
           <Link
-            to={paths.shop}
+            to={{
+              pathname: paths.shop,
+              search: '?page=1'
+            }}
             className='block text-green w-36 text-center text-sm text-white p-4 bg-pink-primary mt-4 sm:mt-0 hover:bg-purple-primary transition-colors duration-300'
           >
             Mua ngay

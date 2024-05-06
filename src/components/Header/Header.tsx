@@ -53,29 +53,36 @@ export default function Header() {
     removeDataFromLocalStorage()
   }
 
-  const handleMobileLogoNavigate = () => {
+  const handleHeaderButtonNavigate = () => {
     setOpenMobileMenu(false)
-    navigate(paths.home)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   return (
     <div className='bg-white fixed top-0 left-0 right-0 z-50 shadow-lg'>
       <div className='flex justify-between items-center m-auto py-2 lg:px-32 md:px-16 px-4'>
-        <Link to={paths.home}>
+        <Link to={paths.home} onClick={handleHeaderButtonNavigate}>
           <img src={logoImg.logo} alt='logo' className='block h-20' />
         </Link>
         <div className='flex-1 hidden xl:flex justify-between items-center gap-2'>
           <div className='flex justify-between items-center gap-4 text-black text-sm'>
-            <Link to={paths.home} className='p-2 header-btn'>
+            <Link to={paths.home} onClick={handleHeaderButtonNavigate} className='p-2 header-btn'>
               Trang chủ
             </Link>
-            <Link to={paths.shop} className='p-2 header-btn'>
+            <Link
+              to={{
+                pathname: paths.shop,
+                search: '?page=1'
+              }}
+              onClick={handleHeaderButtonNavigate}
+              className='p-2 header-btn'
+            >
               Shop
             </Link>
-            <Link to={paths.about} className='p-2 header-btn'>
+            <Link to={paths.about} className='p-2 header-btn' onClick={handleHeaderButtonNavigate}>
               Về chúng tôi
             </Link>
-            <Link to={paths.contact} className='p-2 header-btn'>
+            <Link to={paths.contact} className='p-2 header-btn' onClick={handleHeaderButtonNavigate}>
               Liên hệ
             </Link>
           </div>
@@ -164,7 +171,11 @@ export default function Header() {
                       <div className='text-black-primary text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
                         <p className='w-full p-2'>{userEmail}</p>
                         <hr />
-                        <Link to={paths.profile} className='block p-2 hover:bg-yellow-primary/30 w-full text-start'>
+                        <Link
+                          to={paths.profile}
+                          onClick={handleHeaderButtonNavigate}
+                          className='block p-2 hover:bg-yellow-primary/30 w-full text-start'
+                        >
                           <FontAwesomeIcon icon={faUser} className='text-lg mr-2' />
                           Hồ sơ của tôi
                         </Link>
@@ -196,6 +207,7 @@ export default function Header() {
                 <div className='flex justify-center items-center gap-2'>
                   <Link
                     to={paths.login}
+                    onClick={handleHeaderButtonNavigate}
                     className='flex justify-center items-center py-3 duration-200 pointer hover:text-yellow-primary'
                   >
                     Đăng nhập
@@ -203,6 +215,7 @@ export default function Header() {
                   <div className='h-4 border-l border-l-black'></div>
                   <Link
                     to={paths.register}
+                    onClick={handleHeaderButtonNavigate}
                     className='flex justify-center items-center py-3 duration-200 pointer hover:text-yellow-primary'
                   >
                     Đăng ký
@@ -263,9 +276,9 @@ export default function Header() {
             className='fixed lg:w-1/3 sm:w-1/2 w-full top-0 bottom-0 right-0 bg-white px-12 py-8 duration-300'
           >
             <div className='flex justify-between items-center'>
-              <button onClick={handleMobileLogoNavigate}>
+              <Link to={paths.home} onClick={handleHeaderButtonNavigate}>
                 <img src={logoImg.logo} alt='Logo' className='block w-24 h-20' />
-              </button>
+              </Link>
               <button
                 className='rounded-full border border-gray-300 w-16 h-16 transition-colors duration-300 hover:border-pink-primary hover:bg-pink-primary hover:text-white'
                 onClick={() => setOpenMobileMenu(false)}
@@ -274,19 +287,26 @@ export default function Header() {
               </button>
             </div>
             <div className='text-black mt-4'>
-              <Link to={paths.home} className='block w-full py-3 header-btn'>
+              <Link to={paths.home} onClick={handleHeaderButtonNavigate} className='block w-full py-3 header-btn'>
                 Trang chủ
               </Link>
               <hr />
-              <Link to={paths.shop} className='block w-full py-3 header-btn'>
+              <Link
+                to={{
+                  pathname: paths.shop,
+                  search: '?page=1'
+                }}
+                onClick={handleHeaderButtonNavigate}
+                className='block w-full py-3 header-btn'
+              >
                 Shop
               </Link>
               <hr />
-              <Link to={paths.about} className='block w-full py-3 header-btn'>
+              <Link to={paths.about} onClick={handleHeaderButtonNavigate} className='block w-full py-3 header-btn'>
                 Về chúng tôi
               </Link>
               <hr />
-              <Link to={paths.contact} className='block w-full py-3 header-btn'>
+              <Link to={paths.contact} onClick={handleHeaderButtonNavigate} className='block w-full py-3 header-btn'>
                 Liên hệ
               </Link>
               <hr />
@@ -359,11 +379,19 @@ export default function Header() {
                   </div>
                   <hr />
                   <div className=''>
-                    <Link to={paths.profile} className='block py-2 duration-200 pointer hover:text-yellow-primary'>
+                    <Link
+                      to={paths.profile}
+                      onClick={handleHeaderButtonNavigate}
+                      className='block py-2 duration-200 pointer hover:text-yellow-primary'
+                    >
                       <FontAwesomeIcon icon={faBagShopping} className='text-lg mr-2' />
                       Giỏ hàng
                     </Link>
-                    <Link to={paths.profile} className='block py-2 duration-200 pointer hover:text-yellow-primary'>
+                    <Link
+                      to={paths.profile}
+                      onClick={handleHeaderButtonNavigate}
+                      className='block py-2 duration-200 pointer hover:text-yellow-primary'
+                    >
                       <FontAwesomeIcon icon={faUser} className='text-lg mr-2' />
                       Hồ sơ của tôi
                     </Link>
@@ -380,6 +408,7 @@ export default function Header() {
                 <div className='flex justify-between items-center'>
                   <Link
                     to={paths.login}
+                    onClick={handleHeaderButtonNavigate}
                     className='block px-8 py-3 bg-pink-primary text-white hover:bg-purple-primary duration-300'
                   >
                     Bắt đầu ngay

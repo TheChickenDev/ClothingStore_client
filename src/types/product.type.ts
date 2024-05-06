@@ -21,18 +21,19 @@ export interface Product {
 }
 
 export interface ProductList {
-  shop: Array<Product>
+  products: Array<Product>
   currentPage: number
   totalPage: number
+  totalProduct: number
 }
 
 export interface ProductSearchParams {
-  limit?: number
-  page?: number
-  sort_by?: 'price' | 'rating' | 'sold' | 'view' | 'updatedAt'
-  order?: 'asc' | 'desc'
-  price_min?: number
-  price_max?: number
-  rating_filter?: number
+  limit?: string
+  page?: string
+  sort_by?: 'price' | 'rating' | 'sold' | 'view' | 'updatedAt' | string
+  order?: 'asc' | 'desc' | string
+  price_min?: string
+  price_max?: string
+  rating_filter?: string
   name?: string
 }

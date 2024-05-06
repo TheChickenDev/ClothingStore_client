@@ -21,7 +21,7 @@ export default function Selling({ categoryShowedIndex }: { categoryShowedIndex: 
             </div>
           ) : (
             <>
-              {data?.data.data.shop.map((product: Product, index: number) => (
+              {data?.data.data.products.map((product: Product, index: number) => (
                 <div key={index}>
                   <ProductItem
                     _id={product._id}
@@ -32,6 +32,7 @@ export default function Selling({ categoryShowedIndex }: { categoryShowedIndex: 
                     rating={product.rating}
                     sold={product.sold}
                     thumbnail={product.thumbnail}
+                    isGridView={true}
                   />
                 </div>
               ))}
