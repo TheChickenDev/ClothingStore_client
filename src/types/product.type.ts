@@ -36,4 +36,5 @@ export interface ProductSearchParams {
   price_max?: string
   rating_filter?: string
   name?: string
+  type?: string
 }

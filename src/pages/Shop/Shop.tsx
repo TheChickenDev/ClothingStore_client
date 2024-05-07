@@ -1,21 +1,23 @@
-import { faBars, faBorderAll } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useQuery } from '@tanstack/react-query'
-import { useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
+import debounce from 'lodash.debounce'
 import { Product, ProductSearchParams } from 'src/types/product.type'
 import { getProducts } from 'src/apis/product.api'
 import ProductItem from 'src/components/ProductItem'
 import useQueryParams from 'src/hooks/useQueryParams'
 import paths from 'src/constants/paths'
-import Pagination from './Components/Pagination/Pagination'
+import Pagination from './Components/Pagination'
+import TopbarFilter from './Components/TopbarFilter'
+import SidebarFilter from './Components/SidebarFilter'
 
 export default function Shop() {
   const queryParams: ProductSearchParams | undefined = useQueryParams()
   const currentPage: number = Number(queryParams?.page)
   const selectRef = useRef<HTMLSelectElement>(null)
   const [isGridView, setIsGridView] = useState<boolean>(true)
+  const [type, setType] = useState<string>('')
   const { isLoading, data } = useQuery({
     queryKey: ['products', queryParams],
     queryFn: () => getProducts(queryParams)
@@ -23,80 +25,195 @@ export default function Shop() {
 
   const navigate = useNavigate()
 
-  const handleFilter = (newParams: ProductSearchParams) => {
-    scrollTo({ top: 0, behavior: 'smooth' })
-    setTimeout(() => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleFilter = useCallback(
+    debounce((newParams: ProductSearchParams) => {
+      scrollTo({ top: 0, behavior: 'smooth' })
       navigate({
         pathname: paths.shop,
-        search: createSearchParams({ ...queryParams, ...newParams }).toString()
+        search: createSearchParams({ ...queryParams, ...newParams, page: '1' }).toString()
       })
-    }, 500)
-  }
+    }, 500),
+    [navigate, queryParams]
+  )
 
   const handleSort = () => {
     const selectTag = selectRef.current
     const values = selectTag?.value.split(' ')
     if (!values) return
     const newParams: ProductSearchParams = {}
-    if (values[0]) {
-      newParams.sort_by = values[0]
-    }
-    if (values[1]) {
-      newParams.order = values[1]
+    if (values[0] !== 'all') {
+      if (values[0]) {
+        newParams.sort_by = values[0]
+      }
+      if (values[1]) {
+        newParams.order = values[1]
+      } else {
+        newParams.order = 'desc'
+      }
     } else {
-      newParams.order = 'desc'
+      delete queryParams.sort_by
+      delete queryParams.order
     }
     handleFilter(newParams)
   }
 
+  const handleChooseType = (type: string) => {
+    setType(type)
+    handleFilter({ type })
+  }
+
+  useEffect(() => {}, [])
+
+  const handleChoosePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.id) {
+      case 'price-one':
+        handleFilter({ price_min: '1000', price_max: '50000' })
+
+        break
+      case 'price-two':
+        handleFilter({ price_min: '51000', price_max: '100000' })
+
+        break
+      case 'price-three':
+        handleFilter({ price_min: '101000', price_max: '150000' })
+
+        break
+      case 'price-four':
+        handleFilter({ price_min: '151000', price_max: '200000' })
+
+        break
+      case 'price-five':
+        delete queryParams.price_max
+        handleFilter({ price_min: '200000' })
+
+        break
+      default:
+        break
+    }
+  }
+
+  const handleChooseRating = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.id) {
+      case 'rating-one':
+        handleFilter({ rating_filter: '1' })
+        break
+      case 'rating-two':
+        handleFilter({ rating_filter: '2' })
+        break
+      case 'rating-three':
+        handleFilter({ rating_filter: '3' })
+        break
+      case 'rating-four':
+        handleFilter({ rating_filter: '4' })
+        break
+      case 'rating-five':
+        handleFilter({ rating_filter: '5' })
+        break
+      default:
+        break
+    }
+  }
+
+  useEffect(() => {
+    const { price_min, rating_filter, order, sort_by, type } = queryParams
+    switch (price_min) {
+      case '1000':
+        document.getElementById('price-one')?.setAttribute('checked', 'true')
+        break
+      case '51000':
+        document.getElementById('price-two')?.setAttribute('checked', 'true')
+        break
+      case '101000':
+        document.getElementById('price-three')?.setAttribute('checked', 'true')
+        break
+      case '151000':
+        document.getElementById('price-four')?.setAttribute('checked', 'true')
+        break
+      case '200000':
+        document.getElementById('price-five')?.setAttribute('checked', 'true')
+        break
+    }
+    switch (rating_filter) {
+      case '1':
+        document.getElementById('rating-one')?.setAttribute('checked', 'true')
+        break
+      case '2':
+        document.getElementById('rating-two')?.setAttribute('checked', 'true')
+        break
+      case '3':
+        document.getElementById('rating-three')?.setAttribute('checked', 'true')
+        break
+      case '4':
+        document.getElementById('rating-four')?.setAttribute('checked', 'true')
+        break
+      case '5':
+        document.getElementById('rating-five')?.setAttribute('checked', 'true')
+        break
+    }
+    switch (sort_by) {
+      case 'updatedAt':
+        selectRef.current?.options[1].setAttribute('selected', 'true')
+        break
+      case 'view':
+        selectRef.current?.options[2].setAttribute('selected', 'true')
+        break
+      case 'sold':
+        selectRef.current?.options[3].setAttribute('selected', 'true')
+        break
+      case 'price':
+        if (order === 'desc') {
+          selectRef.current?.options[4].setAttribute('selected', 'true')
+        } else {
+          selectRef.current?.options[5].setAttribute('selected', 'true')
+        }
+        break
+      default:
+        selectRef.current?.options[0].setAttribute('selected', 'true')
+    }
+    setType(type ?? '')
+  }, [queryParams])
+
+  const handleResetFilter = () => {
+    document.getElementsByName('price').forEach((element) => ((element as HTMLInputElement).checked = false))
+    document.getElementsByName('rating').forEach((element) => ((element as HTMLInputElement).checked = false))
+    delete queryParams.type
+    delete queryParams.price_min
+    delete queryParams.price_max
+    delete queryParams.rating_filter
+    handleFilter({})
+  }
+
   return (
-    <div className='py-32 lg:px-32 md:px-16 px-4'>
+    <div className='py-32 lg:px-32 md:px-8 px-4'>
       <>
-        <div className='sm:flex justify-between items-center border px-4 py-2'>
-          <p className='my-2'>
-            Hiển thị trang {data?.data.data.currentPage}/{data?.data.data.totalPage}
-          </p>
-          <div className='flex justify-start items-center gap-4'>
-            <button
-              className={classNames('text-2xl hover:text-pink-primary duration-300', {
-                'text-pink-primary': isGridView
-              })}
-              onClick={() => setIsGridView(true)}
-            >
-              <FontAwesomeIcon icon={faBorderAll} />
-            </button>
-            <button
-              className={classNames('text-2xl hover:text-pink-primary duration-300', {
-                'text-pink-primary': !isGridView
-              })}
-              onClick={() => setIsGridView(false)}
-            >
-              <FontAwesomeIcon icon={faBars} />
-            </button>
-            <select
-              className='flex justify-between items-center w-44 py-2 border relative'
-              name='sort'
-              onChange={handleSort}
-              ref={selectRef}
-            >
-              <option value={'all'}>Tất cả</option>
-              <option value={'updatedAt'}>Sản phẩm mới</option>
-              <option value={'view'}>Phổ biến</option>
-              <option value={'sold'}>Bán chạy</option>
-              <option value={'price desc'}>Giá cao tới thấp</option>
-              <option value={'price asc'}>Giá thấp tới cao</option>
-            </select>
+        <TopbarFilter
+          currentPage={data?.data.data.currentPage}
+          totalPage={data?.data.data.totalPage}
+          isGridView={isGridView}
+          setIsGridView={setIsGridView}
+          selectRef={selectRef}
+          handleSort={handleSort}
+        />
+        <div className='flex md:flex-row flex-col-reverse gap-8 mt-12'>
+          <div className='w-full md:w-1/4'>
+            <SidebarFilter
+              handleChooseType={handleChooseType}
+              handleChoosePrice={handleChoosePrice}
+              handleChooseRating={handleChooseRating}
+              handleResetFilter={handleResetFilter}
+              type={type}
+            />
           </div>
-        </div>
-        <div className='flex sm:flex-row flex-col-reverse gap-8 mt-12'>
-          <div className='w-full sm:w-1/4 border'>Search block</div>
           {isLoading ? (
-            <div className='w-full sm:w-3/4 min-h-96 flex justify-center items-center'>
+            <div className='w-full md:w-3/4 min-h-96 flex justify-center items-center'>
               <div className='loader'></div>
             </div>
+          ) : data?.data.data.totalPage === 0 ? (
+            <div className='w-full md:w-3/4 min-h-96 flex justify-center items-center'>Không có sản phẩm nào!</div>
           ) : (
             <div
-              className={classNames('w-full sm:w-3/4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8', {
+              className={classNames('w-full md:w-3/4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8', {
                 grid: isGridView
               })}
             >

@@ -20,7 +20,7 @@ export default function Pagination({
     if (threeDotsAfter) return null
     threeDotsAfter = true
     return (
-      <div key={page} className='px-4 py-2 m-2 border'>
+      <div key={page} className='w-8 h-8 flex justify-center items-center m-2 border'>
         ...
       </div>
     )
@@ -29,7 +29,7 @@ export default function Pagination({
     if (threeDotsBefore) return null
     threeDotsBefore = true
     return (
-      <div key={page} className='px-4 py-2 m-2 border'>
+      <div key={page} className='w-8 h-8 flex justify-center items-center m-2 border'>
         ...
       </div>
     )
@@ -60,7 +60,7 @@ export default function Pagination({
                 search: createSearchParams({ ...queryParams, page: pageNumber.toString() }).toString()
               }}
               key={page}
-              className={classnames('px-4 py-2 m-2 border', {
+              className={classnames('w-8 h-8 flex justify-center items-center m-2 border', {
                 'border-pink-primary scale-125 pointer-events-none': currentPage === pageNumber
               })}
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
