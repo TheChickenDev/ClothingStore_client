@@ -32,6 +32,8 @@ export default function Header() {
   const [openMobileMenu, setOpenMobileMenu] = useState<boolean>(false)
   const [openMobileLanguagePopover, setOpenMobileLanguagePopover] = useState<boolean>(false)
 
+  const [searchTerm, setSearchTerm] = useState('')
+
   const navigate = useNavigate()
 
   const handleChangeTheme = () => {
@@ -56,6 +58,19 @@ export default function Header() {
   const handleHeaderButtonNavigate = () => {
     setOpenMobileMenu(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value)
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setOpenMobileMenu(false)
+    navigate({
+      pathname: paths.shop,
+      search: `?page=1${searchTerm ? `&name=${searchTerm}` : ''}`
+    })
   }
 
   return (
@@ -87,9 +102,13 @@ export default function Header() {
             </Link>
           </div>
           <div className='flex justify-center items-center gap-4'>
-            <form className='flex justify-center items-center rounded-lg  bg-white border border-yellow-primary overflow-hidden'>
+            <form
+              onSubmit={handleSubmit}
+              className='flex justify-center items-center rounded-lg  bg-white border border-yellow-primary overflow-hidden'
+            >
               <input
                 type='text'
+                onChange={handleInputChange}
                 placeholder='Tìm kiếm...'
                 className='w-48 text-sm p-2 outline-none focus:placeholder-yellow-primary'
               />
@@ -359,11 +378,15 @@ export default function Header() {
               </PopoverMobile>
             </div>
             <hr />
-            <form className='flex justify-center items-center rounded-lg bg-white border border-yellow-primary overflow-hidden mt-2'>
+            <form
+              onSubmit={handleSubmit}
+              className='flex justify-center items-center rounded-lg bg-white border border-yellow-primary overflow-hidden mt-2'
+            >
               <input
                 type='text'
                 placeholder='Tìm kiếm...'
                 className='flex-1 text-sm p-2 outline-none focus:placeholder-yellow-primary'
+                onChange={handleInputChange}
               />
               <button className='p-2 duration-200 hover:text-yellow-primary'>
                 <FontAwesomeIcon icon={faMagnifyingGlass} className='text-lg' />

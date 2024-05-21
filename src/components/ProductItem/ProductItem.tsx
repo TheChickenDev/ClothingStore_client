@@ -1,5 +1,6 @@
 import { faCartPlus, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import classNames from 'classnames'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -32,7 +33,6 @@ export default function ProductItem({
   const handleMouseLeave = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault()
     setShowStylesBar(false)
-    if (currentThumbnail !== 0) handleChangeImageClick(img, 0)
   }
 
   const handleChangeImageClick = (
@@ -71,12 +71,18 @@ export default function ProductItem({
       onMouseLeave={(e) => handleMouseLeave(e)}
     >
       <div className={`${isGridView ? 'w-full' : 'w-1/5'} overflow-hidden relative`}>
-        <img
-          ref={imageRef}
-          src={currentImage}
-          alt='productItem'
-          className='block w-full transition-all duration-500 group-hover:scale-125'
-        />
+        <div
+          className={classNames('w-full flex items-center', {
+            'min-h-[460px]': isGridView
+          })}
+        >
+          <img
+            ref={imageRef}
+            src={currentImage}
+            alt='productItem'
+            className='block w-full transition-all duration-500 group-hover:scale-125'
+          />
+        </div>
         <AnimatePresence>
           {showStylesBar && (
             <motion.div
@@ -88,7 +94,9 @@ export default function ProductItem({
                 {[{ url: img, path: '' }, ...thumbnail].map((style, index) => (
                   <button
                     key={index}
-                    className={`w-12 px-1 ${currentThumbnail === index ? 'transition-all border-2 border-pink-primary' : ''}`}
+                    className={classNames('w-12 px-1', {
+                      'transition-all border-2 border-pink-primary': currentThumbnail === index
+                    })}
                     onClick={(e) => handleChangeImageClick(style.url, index, e)}
                   >
                     <img src={style.url} alt='style' className='block w-full' />
