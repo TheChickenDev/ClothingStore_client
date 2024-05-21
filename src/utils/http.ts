@@ -5,16 +5,20 @@ import {
   getAccessTokenFromLocalStorage,
   removeDataFromLocalStorage,
   saveThemeToLocalStorage,
-  saveLanguageToLocalStorage
+  saveLanguageToLocalStorage,
+  getRefreshTokenFromLocalStorage
 } from './auth'
 import languages from 'src/constants/languages'
+import { refreshAccessToken } from 'src/apis/auth.api'
 
 class HTTP {
   instance: AxiosInstance
   private access_token: string | null
+  private refresh_token: string | null
 
   constructor() {
     this.access_token = getAccessTokenFromLocalStorage()
+    this.refresh_token = getRefreshTokenFromLocalStorage()
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
       timeout: 10000,
@@ -24,8 +28,9 @@ class HTTP {
     })
     this.instance.interceptors.request.use(
       async (config) => {
-        if (config.headers && this.access_token) {
-          config.headers.authorization = this.access_token
+        if (config.headers && this.access_token && this.refresh_token) {
+          config.headers.access_token = 'Bearer ' + this.access_token
+          config.headers.refresh_token = 'Bearer ' + this.refresh_token
         }
         return config
       },
@@ -49,7 +54,24 @@ class HTTP {
         }
         return response
       },
-      (error) => {
+      async (error) => {
+        const originalRequest = error.config
+        if (error.response.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true
+          const refreshTokenResponse = await refreshAccessToken()
+          const new_access_token = refreshTokenResponse.data.data
+          saveAccessTokenToLocalStorage(new_access_token)
+          this.access_token = new_access_token
+          originalRequest.headers.access_token = 'Bearer ' + new_access_token
+          return this.instance(originalRequest)
+            .then((response) => {
+              console.log(response)
+              return response
+            })
+            .catch((error) => {
+              console.log(error)
+            })
+        }
         return Promise.reject(error)
       }
     )

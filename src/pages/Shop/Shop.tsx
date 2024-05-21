@@ -11,6 +11,7 @@ import paths from 'src/constants/paths'
 import Pagination from './Components/Pagination'
 import TopbarFilter from './Components/TopbarFilter'
 import SidebarFilter from './Components/SidebarFilter'
+import NavigationTree from 'src/components/NavigationTree'
 
 export default function Shop() {
   const queryParams: ProductSearchParams | undefined = useQueryParams()
@@ -34,7 +35,7 @@ export default function Shop() {
         search: createSearchParams({ ...queryParams, ...newParams, page: '1' }).toString()
       })
     }, 500),
-    [navigate, queryParams]
+    [queryParams]
   )
 
   const handleSort = () => {
@@ -185,8 +186,15 @@ export default function Shop() {
   }
 
   return (
-    <div className='py-32 lg:px-32 md:px-8 px-4'>
+    <div className='py-28 lg:px-32 md:px-8 px-4'>
       <>
+        <NavigationTree
+          tree={[
+            { name: 'Home', path: '/' },
+            { name: 'Products', path: '/shop' }
+          ]}
+          currentPath='/shop'
+        />
         <TopbarFilter
           currentPage={data?.data.data.currentPage}
           totalPage={data?.data.data.totalPage}

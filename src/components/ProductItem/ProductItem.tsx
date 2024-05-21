@@ -2,7 +2,7 @@ import { faCartPlus, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Product } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
@@ -62,6 +62,11 @@ export default function ProductItem({
     e.stopPropagation()
     console.log('Add to cart')
   }
+
+  useEffect(() => {
+    setCurrentImage(img)
+    setCurrentThumbnail(0)
+  }, [img])
 
   return (
     <Link

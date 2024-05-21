@@ -23,7 +23,7 @@ export default function Category() {
         }}
         className='flex flex-col justify-start items-center gap-2 rounded-md p-2 bg-gray-primary transition-colors duration-300 hover:bg-pink-primary/10'
       >
-        <img src={categoryImg.men} alt='men' className='h-[45px] block' />
+        <img src={categoryImg.male} alt='male' className='h-[45px] block' />
         <p className='text-center text-md uppercase'>Đồ nam</p>
         <p className='text-center text-sm'>Áo thun, sơ mi, quần dài, quần sort,...</p>
       </Link>
@@ -34,7 +34,7 @@ export default function Category() {
         }}
         className='flex flex-col justify-start items-center gap-2 rounded-md p-2 bg-gray-primary transition-colors duration-300 hover:bg-pink-primary/10'
       >
-        <img src={categoryImg.women} alt='women' className='h-[45px] block' />
+        <img src={categoryImg.female} alt='female' className='h-[45px] block' />
         <p className='text-center text-md uppercase'>Đồ nữ</p>
         <p className='text-center text-sm'>Áo quần, Chân váy, đầm, yếm,...</p>
       </Link>

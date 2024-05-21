@@ -27,6 +27,15 @@ export interface ProductList {
   totalProduct: number
 }
 
+export interface CartItem {
+  productId: string
+  name: string
+  img: string
+  size: string
+  quantity: number
+  price: number
+}
+
 export interface ProductSearchParams {
   limit?: string
   page?: string

@@ -4,12 +4,6 @@ export interface SuccessResponse<data> {
   data: data
 }
 
-export interface ErrorResponse<data> {
-  status: string
-  message: string
-  data?: data
-}
-
 export interface JWTPayload {
   exp: number
   iat: number

@@ -25,16 +25,16 @@ export default function SidebarFilter({
         <ul className='list-disc mx-6 my-2 text-sm text-nowrap'>
           <li>
             <button
-              className={classNames('pr-2 py-2 hover:text-pink-primary', { 'text-pink-primary': type === 'men' })}
-              onClick={() => handleChooseType('men')}
+              className={classNames('pr-2 py-2 hover:text-pink-primary', { 'text-pink-primary': type === 'male' })}
+              onClick={() => handleChooseType('male')}
             >
               Quần áo nam
             </button>
           </li>
           <li>
             <button
-              className={classNames('pr-2 py-2 hover:text-pink-primary', { 'text-pink-primary': type === 'women' })}
-              onClick={() => handleChooseType('women')}
+              className={classNames('pr-2 py-2 hover:text-pink-primary', { 'text-pink-primary': type === 'female' })}
+              onClick={() => handleChooseType('female')}
             >
               Quần áo nữ
             </button>
