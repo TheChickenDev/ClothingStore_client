@@ -1,16 +1,19 @@
 import { faMinus, faPlus, faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation, useQuery } from '@tanstack/react-query'
+import classNames from 'classnames'
 import { jwtDecode } from 'jwt-decode'
-import { useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { getProduct } from 'src/apis/product.api'
 import { addToCart } from 'src/apis/user.api'
 import NavigationTree from 'src/components/NavigationTree'
 import paths from 'src/constants/paths'
+import { AppContext } from 'src/contexts/app.context'
 import { CartItem } from 'src/types/product.type'
-import { getAccessTokenFromLocalStorage } from 'src/utils/auth'
+import { JWTPayload } from 'src/types/utils.type'
+import { getAccessTokenFromLocalStorage, saveCartToLocalStorage } from 'src/utils/auth'
 import { formatCurrency } from 'src/utils/utils'
 
 export default function Product() {
@@ -19,8 +22,13 @@ export default function Product() {
     queryKey: ['products', id],
     queryFn: () => getProduct(id)
   })
+  const { setCart } = useContext(AppContext)
+  const imgRef = useRef<HTMLImageElement>(null)
 
   const [quantity, setQuantity] = useState<number>(1)
+  const [size, setSize] = useState<string>('')
+  const [imgIndex, setImgIndex] = useState<number>(0)
+  const [currentImage, setCurrentImage] = useState<string>('')
 
   const navigate = useNavigate()
 
@@ -41,30 +49,35 @@ export default function Product() {
   })
 
   const handleAddToCart = async () => {
+    if (!size) {
+      toast.error('Vui lòng chọn size!')
+      return
+    }
     const product = data?.data.data
     const body: CartItem = {
       productId: String(product?._id),
       name: String(product?.name),
       img: String(product?.img),
-      size: 'L',
+      size: size,
       quantity: quantity,
       price: Number(product?.price)
     }
 
-    const decodedToken: { id: string; isAdmin: string; iat: string; exp: string } = jwtDecode(
-      getAccessTokenFromLocalStorage()
-    )
+    const decodedToken: JWTPayload = jwtDecode(getAccessTokenFromLocalStorage())
 
     loginMutation.mutate(
       { id: decodedToken.id, body },
       {
         onSuccess: (response) => {
           const status = response.data.status
+          const cart = response.data.data
           if (status === 'OK') {
             navigate({
               pathname: paths.shop,
               search: '?page=1'
             })
+            setCart(cart)
+            saveCartToLocalStorage(cart)
             toast.success(response.data.message)
           } else toast.error(response.data.message)
         },
@@ -74,6 +87,48 @@ export default function Product() {
       }
     )
   }
+
+  const handleSizeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSize(e.target.value)
+  }
+
+  const handleMouseMoveImgContainer = (e: React.MouseEvent<HTMLDivElement>) => {
+    const img = imgRef?.current
+    if (img) {
+      const rect = img.getBoundingClientRect()
+      const offsetX = (e.pageX - (rect.x + window.screenX)) / 10
+      const offsetY = (e.pageY - (rect.x + window.screenY)) / 10
+      img.style.transitionDuration = '0ms'
+      img.style.transform = `scale(1.5) translate(${offsetX}px, ${offsetY}px)`
+    }
+  }
+
+  const handleMouseLeaveImgContainer = () => {
+    const img = imgRef?.current
+    if (img) {
+      img.style.transform = 'scale(1) translate(0px, 0px)'
+      img.style.transitionDuration = '300ms'
+    }
+  }
+
+  const handleChangeThumbnail = (index: number, image: string) => {
+    const imgTag = imgRef.current
+    if (imgTag) {
+      imgTag.style.transform = 'scale(0.75)'
+      imgTag.style.opacity = '0'
+      setTimeout(() => {
+        setCurrentImage(image)
+        setImgIndex(index)
+        imgTag.style.transform = ''
+        imgTag.style.opacity = ''
+      }, 500)
+    }
+  }
+
+  useEffect(() => {
+    setCurrentImage(data?.data.data.img ?? '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   return (
     <div className='py-28 lg:px-32 md:px-8 px-4'>
@@ -85,16 +140,41 @@ export default function Product() {
         <>
           <NavigationTree
             tree={[
-              { name: 'Home', path: '/' },
-              { name: 'Products', path: '/shop?page=1' },
+              { name: 'Trang chủ', path: paths.home },
+              { name: 'Của hàng', path: '/shop?page=1' },
               { name: String(data?.data.data.name.toString()), path: `product/${id}` }
             ]}
             currentPath={`product/${id}`}
           />
           <div>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
-              <div className='col-span-1 lg:col-span-1'>
-                <img src={data?.data.data.img} alt={data?.data.data.name} className='w-full' />
+              <div>
+                <div className='col-span-1 lg:col-span-1 overflow-hidden'>
+                  <img
+                    ref={imgRef}
+                    onMouseMove={handleMouseMoveImgContainer}
+                    onMouseLeave={handleMouseLeaveImgContainer}
+                    src={currentImage}
+                    alt={data?.data.data.name}
+                    className='block w-full cursor-zoom-in duration-300'
+                  />
+                </div>
+                <div className='flex justify-start items-center gap-2'>
+                  {[
+                    { url: data?.data.data.img, path: data?.data.data.imgPath },
+                    ...(data?.data.data.thumbnail ?? [])
+                  ].map((img, index) => (
+                    <button key={index} onClick={() => handleChangeThumbnail(index, img.url ?? '')}>
+                      <img
+                        src={img.url}
+                        alt={data?.data.data.name}
+                        className={classNames('w-20 h-20 cursor-pointer', {
+                          'border border-pink-primary': index === imgIndex
+                        })}
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
               <div className='col-span-1 lg:col-span-1'>
                 <h1 className='text-4xl font-semibold'>{data?.data.data.name}</h1>
@@ -135,7 +215,33 @@ export default function Product() {
                     })}
                 </div>
                 <span className='text-base font-semibold'>Đã bán: {data?.data.data.sold}</span>
-                <div className='flex justify-start items-center text-base font-semibold border w-fit mt-8'>
+                <div className='flex justify-start items-center gap-6 mt-8'>
+                  <div className='py-2'>
+                    <input type='radio' value={'S'} id='size-one' name='price' onChange={handleSizeChange} />
+                    <label htmlFor='size-one' className='hover:text-pink-primary cursor-pointer'>
+                      S
+                    </label>
+                  </div>
+                  <div className='py-2'>
+                    <input type='radio' value={'M'} id='size-two' name='price' onChange={handleSizeChange} />
+                    <label htmlFor='size-two' className='hover:text-pink-primary cursor-pointer'>
+                      M
+                    </label>
+                  </div>
+                  <div className='py-2'>
+                    <input type='radio' value={'L'} id='size-three' name='price' onChange={handleSizeChange} />
+                    <label htmlFor='size-three' className='hover:text-pink-primary cursor-pointer'>
+                      L
+                    </label>
+                  </div>
+                  <div className='py-2'>
+                    <input type='radio' value={'XL'} id='size-four' name='price' onChange={handleSizeChange} />
+                    <label htmlFor='size-four' className='hover:text-pink-primary cursor-pointer'>
+                      XL
+                    </label>
+                  </div>
+                </div>
+                <div className='flex justify-start items-center text-base font-semibold border w-fit mt-2'>
                   <button onClick={decreaseQuantity} className='w-12 h-10 hover:text-pink-primary duration-300'>
                     <FontAwesomeIcon icon={faMinus} />
                   </button>

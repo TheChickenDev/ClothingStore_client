@@ -178,10 +178,14 @@ export default function Shop() {
   const handleResetFilter = () => {
     document.getElementsByName('price').forEach((element) => ((element as HTMLInputElement).checked = false))
     document.getElementsByName('rating').forEach((element) => ((element as HTMLInputElement).checked = false))
-    delete queryParams.type
+    delete queryParams.limit
+    delete queryParams.name
+    delete queryParams.order
     delete queryParams.price_min
     delete queryParams.price_max
     delete queryParams.rating_filter
+    delete queryParams.sort_by
+    delete queryParams.type
     handleFilter({})
   }
 
@@ -190,10 +194,10 @@ export default function Shop() {
       <>
         <NavigationTree
           tree={[
-            { name: 'Home', path: '/' },
-            { name: 'Products', path: '/shop' }
+            { name: 'Trang chủ', path: paths.home },
+            { name: 'Cửa hàng', path: '/shop?page=1' }
           ]}
-          currentPath='/shop'
+          currentPath='/shop?page=1'
         />
         <TopbarFilter
           currentPage={data?.data.data.currentPage}

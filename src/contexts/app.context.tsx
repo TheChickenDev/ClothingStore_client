@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react'
+import { userImg } from 'src/assets/images'
 import languages from 'src/constants/languages'
-import { getAccessTokenFromLocalStorage, getThemeFromLocalStorage } from 'src/utils/auth'
+import { CartItem } from 'src/types/product.type'
+import { getAccessTokenFromLocalStorage, getCartItems, getThemeFromLocalStorage } from 'src/utils/auth'
 import { getAvatarFromJWT, getEmailFromJWT } from 'src/utils/utils'
 
 interface AppContextInterface {
@@ -14,6 +16,8 @@ interface AppContextInterface {
   setDarkTheme: React.Dispatch<React.SetStateAction<boolean>>
   language: string
   setLanguage: React.Dispatch<React.SetStateAction<string>>
+  cart: Array<CartItem>
+  setCart: React.Dispatch<React.SetStateAction<Array<CartItem>>>
 }
 
 const initialAppContext: AppContextInterface = {
@@ -21,12 +25,14 @@ const initialAppContext: AppContextInterface = {
   setIsAuthenticated: () => null,
   userEmail: getEmailFromJWT(getAccessTokenFromLocalStorage() || ''),
   setUserEmail: () => null,
-  userAvatar: getAvatarFromJWT(getAccessTokenFromLocalStorage() || ''),
+  userAvatar: getAvatarFromJWT(getAccessTokenFromLocalStorage() || '') || userImg.defaultAvatar,
   setUserAvatar: () => null,
   darkTheme: getThemeFromLocalStorage(),
   setDarkTheme: () => null,
   language: languages.vietnamese,
-  setLanguage: () => null
+  setLanguage: () => null,
+  cart: getCartItems(),
+  setCart: () => null
 }
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext)
@@ -37,6 +43,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [userAvatar, setUserAvatar] = useState<string>(initialAppContext.userAvatar)
   const [darkTheme, setDarkTheme] = useState<boolean>(initialAppContext.darkTheme)
   const [language, setLanguage] = useState<string>(initialAppContext.language)
+  const [cart, setCart] = useState<Array<CartItem>>(initialAppContext.cart)
 
   return (
     <AppContext.Provider
@@ -50,7 +57,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
         darkTheme,
         setDarkTheme,
         language,
-        setLanguage
+        setLanguage,
+        cart,
+        setCart
       }}
     >
       {children}

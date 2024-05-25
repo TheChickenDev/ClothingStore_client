@@ -1,6 +1,7 @@
 import logo from './logo/logo.png'
 import loginAnimatedImg from './login/animatedImg.png'
 import emptyCart from './cart/emptyCart.png'
+import emptyOrderList from './cart/emptyOrders.jpg'
 import carousel1 from './carousel/carousel1.jpeg'
 import carousel2 from './carousel/carousel2.jpg'
 import carousel3 from './carousel/carousel3.jpg'
@@ -32,7 +33,8 @@ export const loginImg = {
 }
 
 export const cartImg = {
-  emptyCart
+  emptyCart,
+  emptyOrderList
 }
 
 export const carouselImg = {

@@ -11,4 +11,7 @@ export interface JWTPayload {
   isAdmin: boolean
   email: string
   avatar: string
+  name: string
+  phone: string
+  address: string
 }

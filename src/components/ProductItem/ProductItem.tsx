@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Product } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils'
 
 type T = Product & { isGridView: boolean }
 
 export default function ProductItem({
-  _id,
+  _id = '',
   img,
   name,
   price,
@@ -24,6 +24,7 @@ export default function ProductItem({
   const [currentImage, setCurrentImage] = useState<string>(img)
   const [currentThumbnail, setCurrentThumbnail] = useState<number>(0)
   const imageRef = useRef<HTMLImageElement>(null)
+  const navigate = useNavigate()
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault()
@@ -60,7 +61,7 @@ export default function ProductItem({
   const handleAddToCartClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log('Add to cart')
+    navigate(`/product/${_id}`)
   }
 
   useEffect(() => {

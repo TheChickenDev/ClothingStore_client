@@ -1,13 +1,15 @@
 import { User } from 'src/types/user.type'
 import { SuccessResponse } from 'src/types/utils.type'
 import http from 'src/utils/http'
-import { LoginFormData, RegisterFormData } from 'src/utils/rules'
+import { LoginFormData } from 'src/utils/rules'
 
 type AuthResponse = {
+  access_token: string
+  refresh_token: string
   user: User
 }
 
-export const registerAccount = (body: RegisterFormData) => {
+export const registerAccount = (body: FormData) => {
   return http.post<SuccessResponse<AuthResponse>>('user/register', body)
 }
 

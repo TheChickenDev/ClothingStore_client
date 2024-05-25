@@ -10,6 +10,7 @@ import { registerAccount } from 'src/apis/auth.api'
 import { userImg } from 'src/assets/images'
 import paths from 'src/constants/paths'
 import { AppContext } from 'src/contexts/app.context'
+import { saveCartToLocalStorage } from 'src/utils/auth'
 import { RegisterFormData, registerSchema } from 'src/utils/rules'
 
 export default function Register() {
@@ -23,9 +24,9 @@ export default function Register() {
   })
 
   const navigate = useNavigate()
-  const { setIsAuthenticated, setUserEmail, setUserAvatar } = useContext(AppContext)
+  const { setIsAuthenticated, setUserEmail, setUserAvatar, setCart } = useContext(AppContext)
   const registerMutation = useMutation({
-    mutationFn: (body: RegisterFormData) => registerAccount(body)
+    mutationFn: (body: FormData) => registerAccount(body)
   })
 
   const onFileSelected = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +50,18 @@ export default function Register() {
   }
 
   const onSubmit = (data: RegisterFormData) => {
-    registerMutation.mutate(data, {
+    const formData = new FormData()
+    formData.append('name', data.name)
+    formData.append('email', data.email)
+    formData.append('password', data.password)
+    formData.append('confirm_password', data.confirm_password)
+    formData.append('phone', data.phone)
+    formData.append('address', data.address)
+    const files = (document.getElementById('avatar') as HTMLInputElement).files
+    if (files) {
+      formData.append('avatar', files[0])
+    }
+    registerMutation.mutate(formData, {
       onSuccess: (response) => {
         const status = response.data.status
         const user = response.data.data?.user
@@ -57,6 +69,8 @@ export default function Register() {
           setIsAuthenticated(true)
           setUserEmail(user.email)
           setUserAvatar(user.avatar ? user.avatar : userImg.defaultAvatar)
+          setCart(user.cart)
+          saveCartToLocalStorage(user.cart)
           navigate(paths.home)
           toast.success(response.data.message)
         } else toast.error(response.data.message)
@@ -77,7 +91,7 @@ export default function Register() {
     <div className='w-full h-full bg-gradient-to-r from-pink-primary/70 to-white flex justify-center items-center'>
       <div className='w-[960px] max-w-[90%] min-h-96 py-24 sm:px-16 rounded-xl bg-white my-12'>
         <p className='text-2xl font-bold mb-2 col-span-2 text-center'>Đăng ký</p>
-        <form onSubmit={handleSubmit(onSubmit)} className='md:flex flex-wrap flex-auto'>
+        <form onSubmit={handleSubmit(onSubmit)} className='md:flex flex-wrap items-center flex-auto'>
           <div className='md:w-1/2 w-full px-2'>
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
@@ -159,7 +173,12 @@ export default function Register() {
             </div>
           </div>
           <div className='md:w-1/2 w-full px-2 text-center'>
-            <img src={userImg.defaultAvatar} alt='avatar' ref={avatarRef} className='w-full aspect-square' />
+            <img
+              src={userImg.defaultAvatar}
+              alt='avatar'
+              ref={avatarRef}
+              className='w-3/4 aspect-square rounded-full mb-2 mx-auto'
+            />
             <div>
               <input
                 className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg hidden'
@@ -183,9 +202,9 @@ export default function Register() {
               </div>
             </div>
           </div>
-          <div className='w-full px-2 mt-2'>
+          <div className='w-full px-2 mt-2 text-center'>
             <button
-              className='w-full px-6 py-3 bg-green-primary rounded-3xl text-xl text-white hover:bg-green-primary/90 col-span-2'
+              className='w-fit min-w-64 px-6 py-3 bg-green-primary rounded-3xl text-xl text-white hover:bg-green-primary/90 col-span-2'
               disabled={registerMutation.isPending}
             >
               {registerMutation.isPending ? (

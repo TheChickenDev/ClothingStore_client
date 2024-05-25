@@ -5,9 +5,12 @@ import DefaultLayout from 'src/components/DefaultLayout'
 import paths from 'src/constants/paths'
 import { AppContext } from 'src/contexts/app.context'
 import About from 'src/pages/About'
+import Cart from 'src/pages/Cart'
 import Contact from 'src/pages/Contact'
+import ForgotPassword from 'src/pages/ForgotPassword'
 import Home from 'src/pages/Home'
 import Login from 'src/pages/Login'
+import Orders from 'src/pages/Orders'
 import Product from 'src/pages/Product'
 import Profile from 'src/pages/Profile'
 import Register from 'src/pages/Register'
@@ -76,13 +79,42 @@ const routes: RouteObject[] = [
       {
         path: paths.register,
         element: <Register />
+      },
+      {
+        path: paths.forgotPassword,
+        element: <ForgotPassword />
       }
     ]
   },
   {
     path: '',
     element: <ProtectedRoute />,
-    children: [{ path: paths.profile, element: <Profile /> }]
+    children: [
+      {
+        path: paths.profile,
+        element: (
+          <DefaultLayout>
+            <Profile />
+          </DefaultLayout>
+        )
+      },
+      {
+        path: paths.cart,
+        element: (
+          <DefaultLayout>
+            <Cart />
+          </DefaultLayout>
+        )
+      },
+      {
+        path: paths.orders,
+        element: (
+          <DefaultLayout>
+            <Orders />
+          </DefaultLayout>
+        )
+      }
+    ]
   }
 ]
 

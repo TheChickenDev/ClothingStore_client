@@ -1,4 +1,5 @@
 import languages from 'src/constants/languages'
+import { CartItem } from 'src/types/product.type'
 
 export const saveAccessTokenToLocalStorage = (access_token: string) => {
   localStorage.setItem('access_token', access_token)
@@ -38,9 +39,29 @@ export const getLanguageFromLocalStorage = (): string => {
   return languages.vietnamese
 }
 
+export const saveCartToLocalStorage = (cart: Array<CartItem>) => {
+  localStorage.setItem('cart', JSON.stringify(cart))
+}
+
+export const addItemToCart = (item: CartItem): void => {
+  const cart: Array<CartItem> = JSON.parse(localStorage.getItem('cart') || '[]')
+  cart.push(item)
+  localStorage.setItem('cart', JSON.stringify(cart))
+}
+
+export const getCartItems = (): Array<CartItem> => {
+  const cart: Array<CartItem> = JSON.parse(localStorage.getItem('cart') || '[]')
+  return cart
+}
+
+export const clearCart = (): void => {
+  localStorage.removeItem('cart')
+}
+
 export const removeDataFromLocalStorage = () => {
   localStorage.removeItem('access_token')
   localStorage.removeItem('refresh_token')
   localStorage.removeItem('darkTheme')
   localStorage.removeItem('language')
+  localStorage.removeItem('cart')
 }

@@ -1,3 +1,5 @@
+import { CartItem } from './product.type'
+
 export interface User {
   _id: string
   isAdmin: boolean
@@ -6,6 +8,7 @@ export interface User {
   address: string
   phone: string
   avatar: string
+  cart: Array<CartItem>
   createdAt: string
   updatedAt: string
 }

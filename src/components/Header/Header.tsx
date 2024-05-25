@@ -1,4 +1,4 @@
-import { faSun, faUser } from '@fortawesome/free-regular-svg-icons'
+import { faSun } from '@fortawesome/free-regular-svg-icons'
 import {
   faAngleRight,
   faBagShopping,
@@ -7,6 +7,8 @@ import {
   faEarthEurope,
   faMoon,
   faSignOut,
+  faTruckFast,
+  faUserAlt,
   faXmark
 } from '@fortawesome/free-solid-svg-icons'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons/faMagnifyingGlass'
@@ -15,17 +17,38 @@ import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { toast } from 'react-toastify'
-import { removeDataFromLocalStorage, saveLanguageToLocalStorage, saveThemeToLocalStorage } from 'src/utils/auth'
+import {
+  getAccessTokenFromLocalStorage,
+  removeDataFromLocalStorage,
+  saveCartToLocalStorage,
+  saveLanguageToLocalStorage,
+  saveThemeToLocalStorage
+} from 'src/utils/auth'
 import { cartImg, headerImg, logoImg } from 'src/assets/images'
 import languages from 'src/constants/languages'
 import { AppContext } from 'src/contexts/app.context'
 import paths from 'src/constants/paths'
 import Popover from '../Popover'
 import PopoverMobile from '../PopoverMobile/PopoverMobile'
+import { formatCurrency } from 'src/utils/utils'
+import { useMutation } from '@tanstack/react-query'
+import { removeFromCart } from 'src/apis/user.api'
+import { jwtDecode } from 'jwt-decode'
+import { JWTPayload } from 'src/types/utils.type'
 
 export default function Header() {
-  const { isAuthenticated, setIsAuthenticated, userEmail, userAvatar, darkTheme, setDarkTheme, language, setLanguage } =
-    useContext(AppContext)
+  const {
+    isAuthenticated,
+    setIsAuthenticated,
+    userEmail,
+    userAvatar,
+    darkTheme,
+    setDarkTheme,
+    language,
+    setLanguage,
+    cart,
+    setCart
+  } = useContext(AppContext)
   const [openLanguagePopover, setOpenLanguagePopover] = useState<boolean>(false)
   const [openUserPopover, setOpenUserPopover] = useState<boolean>(false)
   const [openCartPopover, setOpenCartPopover] = useState<boolean>(false)
@@ -73,6 +96,41 @@ export default function Header() {
     })
   }
 
+  const removeFromCartMutation = useMutation({
+    mutationFn: ({ id, productId, size }: { id: string; productId: string; size: string }) =>
+      removeFromCart(id, productId, size)
+  })
+
+  const handleRemoveFromCart = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    productId: string,
+    size: string
+  ) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const decodedToken: JWTPayload = jwtDecode(getAccessTokenFromLocalStorage())
+    removeFromCartMutation.mutate(
+      { id: decodedToken.id, productId, size },
+      {
+        onSuccess: (response) => {
+          const status = response.data.status
+          const cart = response.data.data
+          if (status === 'OK') {
+            toast.success(response.data.message)
+            setCart(cart)
+            saveCartToLocalStorage(cart)
+          } else {
+            toast.error(response.data.message)
+          }
+        },
+        onError: (error) => {
+          toast.error(error.message)
+        }
+      }
+    )
+  }
+
   return (
     <div className='bg-white fixed top-0 left-0 right-0 z-50 shadow-lg'>
       <div className='flex justify-between items-center m-auto py-2 lg:px-32 md:px-16 px-4'>
@@ -92,7 +150,7 @@ export default function Header() {
               onClick={handleHeaderButtonNavigate}
               className='p-2 header-btn'
             >
-              Shop
+              Cửa hàng
             </Link>
             <Link to={paths.about} className='p-2 header-btn' onClick={handleHeaderButtonNavigate}>
               Về chúng tôi
@@ -195,11 +253,24 @@ export default function Header() {
                           onClick={handleHeaderButtonNavigate}
                           className='block p-2 hover:bg-yellow-primary/30 w-full text-start'
                         >
-                          <FontAwesomeIcon icon={faUser} className='text-lg mr-2' />
                           Hồ sơ của tôi
                         </Link>
-                        <button
+                        <Link
+                          to={paths.cart}
+                          onClick={handleHeaderButtonNavigate}
                           className='block p-2 hover:bg-yellow-primary/30 w-full text-start'
+                        >
+                          Giỏ hàng
+                        </Link>
+                        <Link
+                          to={paths.orders}
+                          onClick={handleHeaderButtonNavigate}
+                          className='block p-2 hover:bg-yellow-primary/30 w-full text-start'
+                        >
+                          Đơn hàng
+                        </Link>
+                        <button
+                          className='block p-2 hover:bg-yellow-primary/30 w-full text-start text-red-500 border-t'
                           onClick={handleLogout}
                         >
                           Đăng xuất
@@ -216,8 +287,46 @@ export default function Header() {
                     <FontAwesomeIcon icon={faBagShopping} className='text-4xl' />
                     <Popover isOpened={openCartPopover} positionX='right' positionY='bottom'>
                       <div className='text-black-primary text-left bg-white shadow-md rounded-md min-w-48 overflow-hidden'>
-                        <img src={cartImg.emptyCart} alt='emptyCart' />
-                        <p className='w-full text-center p-2'>{'Giỏ hàng trống! :<'}</p>
+                        {cart?.length < 1 ? (
+                          <div>
+                            <img src={cartImg.emptyCart} alt='emptyCart' />
+                            <p className='w-full text-center p-2'>{'Giỏ hàng trống! :<'}</p>
+                          </div>
+                        ) : (
+                          <div className='w-full'>
+                            {cart.map((item) => (
+                              <Link
+                                key={item.productId}
+                                to={`/product/${item.productId}`}
+                                className='flex gap-2 p-2 w-full min-w-80 border-b'
+                              >
+                                <div className='w-16 min-w-16 h-20'>
+                                  <img src={item.img} alt='product' className='border block w-full h-full ' />
+                                </div>
+                                <div className='flex flex-col gap-1 w-full'>
+                                  <p className='line-clamp-1'>{item.name}</p>
+                                  <p className='flex-1'>
+                                    {item.quantity + ' size ' + item.size + ' x ' + formatCurrency(item.price)}
+                                  </p>
+                                  <div>
+                                    <button
+                                      className='py-1 w-12 border float-right hover:text-pink-primary duration-300'
+                                      onClick={(e) => handleRemoveFromCart(e, item.productId, item.size)}
+                                    >
+                                      Xóa
+                                    </button>
+                                  </div>
+                                </div>
+                              </Link>
+                            ))}
+                            <Link
+                              to={'/cart'}
+                              className='block text-center underline p-2 hover:text-pink-primary duration-300'
+                            >
+                              Xem tất cả
+                            </Link>
+                          </div>
+                        )}
                       </div>
                     </Popover>
                   </div>
@@ -318,7 +427,7 @@ export default function Header() {
                 onClick={handleHeaderButtonNavigate}
                 className='block w-full py-3 header-btn'
               >
-                Shop
+                Cửa hàng
               </Link>
               <hr />
               <Link to={paths.about} onClick={handleHeaderButtonNavigate} className='block w-full py-3 header-btn'>
@@ -392,7 +501,7 @@ export default function Header() {
                 <FontAwesomeIcon icon={faMagnifyingGlass} className='text-lg' />
               </button>
             </form>
-            <div className='text-sm text-black mt-28'>
+            <div className='text-sm text-black mt-20'>
               {isAuthenticated ? (
                 <>
                   <div className='flex justify-between items-center'>
@@ -407,19 +516,27 @@ export default function Header() {
                       onClick={handleHeaderButtonNavigate}
                       className='block py-2 duration-200 pointer hover:text-yellow-primary'
                     >
-                      <FontAwesomeIcon icon={faBagShopping} className='text-lg mr-2' />
-                      Giỏ hàng
+                      <FontAwesomeIcon icon={faUserAlt} className='text-lg mr-4' />
+                      Hồ sơ của tôi
                     </Link>
                     <Link
-                      to={paths.profile}
+                      to={paths.cart}
                       onClick={handleHeaderButtonNavigate}
                       className='block py-2 duration-200 pointer hover:text-yellow-primary'
                     >
-                      <FontAwesomeIcon icon={faUser} className='text-lg mr-2' />
-                      Hồ sơ của tôi
+                      <FontAwesomeIcon icon={faBagShopping} className='text-lg mr-4' />
+                      Giỏ hàng
+                    </Link>
+                    <Link
+                      to={paths.orders}
+                      onClick={handleHeaderButtonNavigate}
+                      className='block py-2 duration-200 pointer hover:text-yellow-primary'
+                    >
+                      <FontAwesomeIcon icon={faTruckFast} className='text-lg mr-2' />
+                      Đơn hàng
                     </Link>
                     <button
-                      className='block py-2 duration-200 pointer hover:text-yellow-primary'
+                      className='text-red-500 block py-2 duration-200 pointer hover:text-yellow-primary'
                       onClick={handleLogout}
                     >
                       Đăng xuất

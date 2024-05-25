@@ -10,6 +10,9 @@ import {
 } from './auth'
 import languages from 'src/constants/languages'
 import { refreshAccessToken } from 'src/apis/auth.api'
+import { toast } from 'react-toastify'
+
+const formDataUrl = ['user/update', 'user/register']
 
 class HTTP {
   instance: AxiosInstance
@@ -21,16 +24,19 @@ class HTTP {
     this.refresh_token = getRefreshTokenFromLocalStorage()
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
-      timeout: 10000,
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      timeout: 30000
     })
     this.instance.interceptors.request.use(
       async (config) => {
         if (config.headers && this.access_token && this.refresh_token) {
-          config.headers.access_token = 'Bearer ' + this.access_token
-          config.headers.refresh_token = 'Bearer ' + this.refresh_token
+          const contentType = formDataUrl.some((item) => config.url?.includes(item))
+            ? 'multipart/form-data'
+            : 'application/json'
+          console.log(contentType)
+          console.log(formDataUrl.some((item) => config.url?.includes(item)))
+          config.headers['access_token'] = 'Bearer ' + this.access_token
+          config.headers['refresh_token'] = 'Bearer ' + this.refresh_token
+          config.headers['Content-Type'] = contentType
         }
         return config
       },
@@ -65,11 +71,10 @@ class HTTP {
           originalRequest.headers.access_token = 'Bearer ' + new_access_token
           return this.instance(originalRequest)
             .then((response) => {
-              console.log(response)
               return response
             })
             .catch((error) => {
-              console.log(error)
+              toast.error(error)
             })
         }
         return Promise.reject(error)

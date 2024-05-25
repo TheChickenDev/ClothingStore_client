@@ -13,6 +13,7 @@ import { loginSchema, LoginFormData } from 'src/utils/rules'
 import { login } from 'src/apis/auth.api'
 import { AppContext } from 'src/contexts/app.context'
 import { loginImg, userImg } from 'src/assets/images'
+import { saveCartToLocalStorage } from 'src/utils/auth'
 
 export default function Login() {
   const imgRef = useRef<HTMLImageElement>(null)
@@ -25,7 +26,7 @@ export default function Login() {
     resolver: yupResolver(loginSchema)
   })
 
-  const { setIsAuthenticated, setUserEmail, setUserAvatar } = useContext(AppContext)
+  const { setIsAuthenticated, setUserEmail, setUserAvatar, setCart } = useContext(AppContext)
   const loginMutation = useMutation({
     mutationFn: (body: LoginFormData) => login(body)
   })
@@ -41,6 +42,8 @@ export default function Login() {
           setIsAuthenticated(true)
           setUserEmail(user.email)
           setUserAvatar(user.avatar ? user.avatar : userImg.defaultAvatar)
+          setCart(user.cart)
+          saveCartToLocalStorage(user.cart)
           navigate(paths.home)
           toast.success(response.data.message)
         } else toast.error(response.data.message)
@@ -131,7 +134,7 @@ export default function Login() {
             </button>
           </form>
           <p className='my-2'>
-            <Link to={paths.home} className='text-sm text-gray-700 hover:text-green-primary'>
+            <Link to={paths.forgotPassword} className='text-sm text-gray-700 hover:text-green-primary'>
               Quên mật khẩu?
             </Link>
           </p>
