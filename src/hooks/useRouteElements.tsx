@@ -14,6 +14,7 @@ import Orders from 'src/pages/Orders'
 import Product from 'src/pages/Product'
 import Profile from 'src/pages/Profile'
 import Register from 'src/pages/Register'
+import ResetPassword from 'src/pages/ResetPassword'
 import Shop from 'src/pages/Shop'
 
 const ProtectedRoute = () => {
@@ -83,6 +84,10 @@ const routes: RouteObject[] = [
       {
         path: paths.forgotPassword,
         element: <ForgotPassword />
+      },
+      {
+        path: paths.resetPassword,
+        element: <ResetPassword />
       }
     ]
   },

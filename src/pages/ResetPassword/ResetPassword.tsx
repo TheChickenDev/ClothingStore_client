@@ -4,14 +4,15 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { useEffect, useRef } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { forgotPassword } from 'src/apis/auth.api'
+import { resetPassword } from 'src/apis/auth.api'
 import { loginImg } from 'src/assets/images'
 import paths from 'src/constants/paths'
-import { ForgotPasswordFormData, forgotPasswordSchema } from 'src/utils/rules'
+import { ResetPasswordFormData, resetPasswordSchema } from 'src/utils/rules'
 
-export default function ForgotPassword() {
+export default function ResetPassword() {
+  const { token } = useParams<{ token: string }>()
   const imgRef = useRef<HTMLImageElement>(null)
   const imgBoundRef = useRef<HTMLDivElement>(null)
   const {
@@ -19,21 +20,21 @@ export default function ForgotPassword() {
     handleSubmit,
     formState: { errors }
   } = useForm({
-    resolver: yupResolver(forgotPasswordSchema)
+    resolver: yupResolver(resetPasswordSchema)
   })
 
-  const forgotPasswordMutation = useMutation({
-    mutationFn: (body: ForgotPasswordFormData) => forgotPassword(body)
+  const resetPasswordMutation = useMutation({
+    mutationFn: (body: ResetPasswordFormData) => resetPassword(body)
   })
 
   const navigate = useNavigate()
 
-  const onSubmit = (data: ForgotPasswordFormData) => {
-    forgotPasswordMutation.mutate(data, {
+  const onSubmit = (data: ResetPasswordFormData) => {
+    resetPasswordMutation.mutate(data, {
       onSuccess: (response) => {
         const status = response.data.status
         if (status === 'OK') {
-          navigate(`/reset-password/${response.data.data}`)
+          navigate(paths.login)
           toast.success(response.data.message)
         } else toast.error(response.data.message)
       },
@@ -81,31 +82,64 @@ export default function ForgotPassword() {
           />
         </div>
         <div className='sm:w-1/2 px-8 text-center'>
-          <p className='text-2xl font-bold mb-2'>Quên mật khẩu</p>
+          <p className='text-2xl font-bold mb-2'>Đăng nhập</p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
+              type='hidden'
+              placeholder='Token'
+              value={token}
+              {...register('token')}
+            />
+            <input
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
               type='text'
-              placeholder='Email'
-              {...register('email')}
+              placeholder='OTP'
+              {...register('key')}
             />
             <div className='min-h-5'>
-              {errors.email && (
+              {errors.key && (
                 <p className='text-red-700 text-start ml-4' role='alert'>
-                  {errors.email.message}
+                  {errors.key.message}
+                </p>
+              )}
+            </div>
+            <input
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
+              type='password'
+              placeholder='Mật khẩu'
+              {...register('password')}
+            />
+            <div className='min-h-5'>
+              {errors.password && (
+                <p className='text-red-700 text-start ml-4' role='alert'>
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+            <input
+              className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
+              type='password'
+              placeholder='Nhập lại mật khẩu'
+              {...register('confirm_password')}
+            />
+            <div className='min-h-5'>
+              {errors.confirm_password && (
+                <p className='text-red-700 text-start ml-4' role='alert'>
+                  {errors.confirm_password.message}
                 </p>
               )}
             </div>
             <button
               className='w-full min-h-14 px-6 py-3 mt-2 bg-green-primary rounded-3xl text-xl text-white text-center'
-              disabled={forgotPasswordMutation.isPending}
+              disabled={resetPasswordMutation.isPending}
             >
-              {forgotPasswordMutation.isPending ? (
+              {resetPasswordMutation.isPending ? (
                 <div className='w-full flex justify-center items-center'>
                   <div className='loader'></div>
                 </div>
               ) : (
-                'Lấy mã OTP'
+                'Đăng nhập'
               )}
             </button>
           </form>

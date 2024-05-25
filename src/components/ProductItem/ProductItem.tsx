@@ -76,10 +76,11 @@ export default function ProductItem({
       onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseLeave={(e) => handleMouseLeave(e)}
     >
-      <div className={`${isGridView ? 'w-full' : 'w-1/5'} overflow-hidden relative`}>
+      <div className={`${isGridView ? 'w-full' : 'w-2/5'} overflow-hidden relative`}>
         <div
           className={classNames('w-full flex items-center', {
-            'min-h-[460px]': isGridView
+            'min-h-[460px]': isGridView,
+            'sm:min-h-[300px]': !isGridView
           })}
         >
           <img
@@ -113,7 +114,7 @@ export default function ProductItem({
           )}
         </AnimatePresence>
       </div>
-      <div className={`${isGridView ? 'text-center p-2' : 'w-4/5 p-12'}`}>
+      <div className={`${isGridView ? 'text-center p-2' : 'w-3/5 p-4'}`}>
         <p className='text-md line-clamp-2 min-h-10'>{name}</p>
         <p className='text-xs line-through mt-2'>{formatCurrency(price_before_discount)}</p>
         <p className='text-xl font-bold text-green-primary mb-2'>{formatCurrency(price)}</p>

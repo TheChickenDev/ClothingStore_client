@@ -120,3 +120,44 @@ export type UpdateFormData = {
   address: string
   avatar?: FileList | null
 }
+
+export const forgotPasswordSchema = yup.object({
+  email: yup
+    .string()
+    .required('Vui lòng nhập email!')
+    .matches(
+      /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      'Email không đúng định dạng!'
+    )
+    .min(6, 'Email có độ dài từ 6 - 120 ký tự!')
+    .max(120, 'Email có độ dài từu 6 - 120 ký tự!')
+})
+
+export type ForgotPasswordFormData = {
+  email: string
+}
+
+export const resetPasswordSchema = yup.object({
+  key: yup
+    .string()
+    .required('Vui lòng nhập OTP!')
+    .matches(/^\d{6}$/, 'OTP phải bao gồm đúng sáu chữ số!'),
+  token: yup.string().required(),
+  password: yup
+    .string()
+    .required('Vui lòng nhập mật khẩu!')
+    .matches(/^\S*$/, 'Mật khẩu không được chứa khoảng trắng!')
+    .min(6, 'Mật khẩu có độ dài từ 6 - 120 ký tự!')
+    .max(120, 'Mật khẩu có độ dài từ 6 - 120 ký tự'),
+  confirm_password: yup
+    .string()
+    .required('Vui lòng nhập lại mật khẩu!')
+    .oneOf([yup.ref('password')], 'Mật khẩu nhập lại không khớp!')
+})
+
+export type ResetPasswordFormData = {
+  key: string
+  token: string
+  password: string
+  confirm_password: string
+}

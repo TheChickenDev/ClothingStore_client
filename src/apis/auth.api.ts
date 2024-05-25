@@ -1,7 +1,7 @@
 import { User } from 'src/types/user.type'
 import { SuccessResponse } from 'src/types/utils.type'
 import http from 'src/utils/http'
-import { LoginFormData } from 'src/utils/rules'
+import { ForgotPasswordFormData, LoginFormData, ResetPasswordFormData } from 'src/utils/rules'
 
 type AuthResponse = {
   access_token: string
@@ -23,4 +23,12 @@ export const logout = () => {
 
 export const refreshAccessToken = () => {
   return http.post<SuccessResponse<string>>('user/refresh-token')
+}
+
+export const forgotPassword = (body: ForgotPasswordFormData) => {
+  return http.post<SuccessResponse<string>>('user/forgot-password', body)
+}
+
+export const resetPassword = (body: ResetPasswordFormData) => {
+  return http.patch<SuccessResponse<null>>('user/reset-password', body)
 }
