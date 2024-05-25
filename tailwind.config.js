@@ -14,7 +14,14 @@ export const theme = {
       'black-primary': '#1d1e23',
       'black-layer': '#03041c',
       'pink-primary': '#f50963',
-      'purple-primary': '#6364db'
+      'purple-primary': '#6364db',
+      'purple-layer': '#03041c8f'
+    },
+    backgroundImage: {
+      'about-carousel': "url('/src/assets/images/about/carousel.jpg')"
+    },
+    fontFamily: {
+      heading: ['Space Grotesk', 'sans-serif']
     }
   }
 }
