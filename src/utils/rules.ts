@@ -161,3 +161,27 @@ export type ResetPasswordFormData = {
   password: string
   confirm_password: string
 }
+
+export const sendMessageSchema = yup.object({
+  email: yup
+    .string()
+    .required('Vui lòng nhập email!')
+    .matches(
+      /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      'Email không đúng định dạng!'
+    )
+    .min(6, 'Email có độ dài từ 6 - 120 ký tự!')
+    .max(120, 'Email có độ dài từu 6 - 120 ký tự!'),
+  name: yup
+    .string()
+    .required('Vui lòng nhập tên!')
+    .matches(/^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{2,}$/, 'Tên không được chứa ký tự đặc biệt!')
+    .max(120, 'Tên có độ dài không vượt quá 120 ký tự!'),
+  message: yup.string().required('Vui lòng nhập tin nhắn!').max(500, 'Tin nhắn có độ dài không vượt quá 500 ký tự!')
+})
+
+export type SendMessageFormData = {
+  name: string
+  email: string
+  message: string
+}

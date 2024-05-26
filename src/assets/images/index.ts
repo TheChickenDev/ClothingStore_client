@@ -34,7 +34,6 @@ import microsoftLogo from './about/microsoft.webp'
 import olaLogo from './about/ola.webp'
 import techlifyLogo from './about/techlify.webp'
 import walmartLogo from './about/walmart.webp'
-import aboutCarousel from './about/carousel.jpg'
 import aboutSlider1 from './about/slider1.webp'
 import aboutSlider2 from './about/slider2.webp'
 import aboutSlider3 from './about/slider3.webp'
@@ -45,6 +44,10 @@ import member4 from './about/member4.webp'
 import member5 from './about/member5.webp'
 import member6 from './about/member6.webp'
 import videoThumbnail from './about/videoThumbnail.jpg'
+
+import icon1 from './contact/icon1.webp'
+import icon2 from './contact/icon2.webp'
+import icon3 from './contact/icon3.webp'
 
 export const logoImg = {
   logo
@@ -99,7 +102,6 @@ export const aboutPageImg = {
   olaLogo,
   techlifyLogo,
   walmartLogo,
-  aboutCarousel,
   aboutSlider1,
   aboutSlider2,
   aboutSlider3,
@@ -110,4 +112,10 @@ export const aboutPageImg = {
   member5,
   member6,
   videoThumbnail
+}
+
+export const contactPageImg = {
+  icon1,
+  icon2,
+  icon3
 }

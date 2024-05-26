@@ -18,7 +18,8 @@ export const theme = {
       'purple-layer': '#03041c8f'
     },
     backgroundImage: {
-      'about-carousel': "url('/src/assets/images/about/carousel.jpg')"
+      'about-carousel': "url('/src/assets/images/about/carousel.jpg')",
+      'contact-carousel': "url('/src/assets/images/contact/background.png')"
     },
     fontFamily: {
       heading: ['Space Grotesk', 'sans-serif'],
