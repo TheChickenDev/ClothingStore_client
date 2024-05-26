@@ -2,15 +2,19 @@ import { faFacebookF, faLinkedinIn, faTwitter, faYoutube } from '@fortawesome/fr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
+import classNames from 'classnames'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { sendMessage } from 'src/apis/user.api'
 import { contactPageImg } from 'src/assets/images'
 import paths from 'src/constants/paths'
+import { AppContext } from 'src/contexts/app.context'
 import { SendMessageFormData, sendMessageSchema } from 'src/utils/rules'
 
 export default function Contact() {
+  const { darkTheme } = useContext(AppContext)
   const {
     register,
     handleSubmit,
@@ -50,14 +54,14 @@ export default function Contact() {
   }
 
   return (
-    <div className='py-24'>
+    <div className={classNames('py-24', { 'bg-black-theme text-white': darkTheme })}>
       <section className='relative text-center bg-contact-carousel bg-no-repeat bg-cover bg-center'>
-        <div className='relative pt-56 pb-48 text-black font-bold z-10'>
+        <div className='relative pt-56 pb-48 font-bold z-10'>
           <p className='text-6xl mb-4'>Có câu hỏi?</p>
           <p className='text-6xl mb-4'>Liên hệ với chúng tôi.</p>
         </div>
       </section>
-      <section className='grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 lg:px-24 px-4'>
+      <section className='text-black grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 lg:px-24 px-4'>
         <div className='z-10 bg-white p-12 text-center font-heading shadow-md'>
           <img src={contactPageImg.icon2} alt='contact' className='block m-auto' />
           <p className='underline text-xl text-gray-400 my-4'>Liên hệ</p>

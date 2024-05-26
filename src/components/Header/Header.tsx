@@ -35,6 +35,7 @@ import { useMutation } from '@tanstack/react-query'
 import { removeFromCart } from 'src/apis/user.api'
 import { jwtDecode } from 'jwt-decode'
 import { JWTPayload } from 'src/types/utils.type'
+import classNames from 'classnames'
 
 export default function Header() {
   const {
@@ -132,13 +133,18 @@ export default function Header() {
   }
 
   return (
-    <div className='bg-white fixed top-0 left-0 right-0 z-50 shadow-lg'>
+    <div
+      className={classNames('fixed top-0 left-0 right-0 z-50 shadow-lg', {
+        'bg-black': darkTheme,
+        'bg-white': !darkTheme
+      })}
+    >
       <div className='flex justify-between items-center m-auto py-2 lg:px-32 md:px-16 px-4'>
         <Link to={paths.home} onClick={handleHeaderButtonNavigate}>
           <img src={logoImg.logo} alt='logo' className='block h-20' />
         </Link>
         <div className='flex-1 hidden xl:flex justify-between items-center gap-2'>
-          <div className='flex justify-between items-center gap-4 text-black text-sm'>
+          <div className={classNames('flex justify-between items-center gap-4 text-sm', { 'text-white': darkTheme })}>
             <Link to={paths.home} onClick={handleHeaderButtonNavigate} className='p-2 header-btn'>
               Trang chủ
             </Link>
@@ -175,7 +181,9 @@ export default function Header() {
               </button>
             </form>
             <button
-              className='text-2xl text-black w-8 h-8 duration-200 hover:text-yellow-primary relative'
+              className={classNames('text-2xl w-8 h-8 duration-200 hover:text-yellow-primary relative', {
+                'text-white': darkTheme
+              })}
               onClick={handleChangeTheme}
             >
               <AnimatePresence>
@@ -204,7 +212,10 @@ export default function Header() {
               </AnimatePresence>
             </button>
             <div
-              className='flex justify-center items-center py-3 relative text-black duration-200 pointer hover:text-yellow-primary'
+              className={classNames(
+                'flex justify-center items-center py-3 relative duration-200 pointer hover:text-yellow-primary',
+                { 'text-white': darkTheme }
+              )}
               onMouseEnter={() => setOpenLanguagePopover(true)}
               onMouseLeave={() => setOpenLanguagePopover(false)}
             >
@@ -233,7 +244,7 @@ export default function Header() {
                 </div>
               </Popover>
             </div>
-            <div className='flex justify-center items-center gap-4 text-sm text-black'>
+            <div className='flex justify-center items-center gap-4 text-sm'>
               {isAuthenticated ? (
                 <>
                   <div
@@ -280,7 +291,9 @@ export default function Header() {
                     </Popover>
                   </div>
                   <div
-                    className='relative py-2 duration-200 pointer hover:text-yellow-primary'
+                    className={classNames('relative py-2 duration-200 pointer hover:text-yellow-primary', {
+                      'text-white': darkTheme
+                    })}
                     onMouseEnter={() => setOpenCartPopover(true)}
                     onMouseLeave={() => setOpenCartPopover(false)}
                   >
@@ -332,7 +345,7 @@ export default function Header() {
                   </div>
                 </>
               ) : (
-                <div className='flex justify-center items-center gap-2'>
+                <div className={classNames('flex justify-center items-center gap-2', { 'text-white': darkTheme })}>
                   <Link
                     to={paths.login}
                     onClick={handleHeaderButtonNavigate}
@@ -340,7 +353,7 @@ export default function Header() {
                   >
                     Đăng nhập
                   </Link>
-                  <div className='h-4 border-l border-l-black'></div>
+                  <div className='h-4 border-l'></div>
                   <Link
                     to={paths.register}
                     onClick={handleHeaderButtonNavigate}
@@ -355,7 +368,10 @@ export default function Header() {
         </div>
         <div className='flex xl:hidden justify-center items-center gap-4'>
           <button
-            className='relative text-2xl w-8 h-8 text-black transition-colors duration-300 hover:text-yellow-primary'
+            className={classNames(
+              'relative text-2xl w-8 h-8 transition-colors duration-300 hover:text-yellow-primary',
+              { 'text-white': darkTheme }
+            )}
             onClick={handleChangeTheme}
           >
             <AnimatePresence>
@@ -384,9 +400,24 @@ export default function Header() {
             </AnimatePresence>
           </button>
           <button className='group relative w-8 h-8' onClick={() => setOpenMobileMenu(true)}>
-            <span className='block absolute top-1/4 left-0 w-3/4 border-b-2 border-b-black duration-300 group-hover:border-b-yellow-primary group-hover:left-1/2'></span>
-            <span className='block absolute top-1/2 left-1/3 w-1/3 border-b-[3px] border-b-black duration-300 group-hover:border-b-yellow-primary'></span>
-            <span className='block absolute top-3/4 left-1/4 w-3/4 border-b-[3px] border-b-black duration-300 group-hover:border-b-yellow-primary group-hover:-left-1/4'></span>
+            <span
+              className={classNames(
+                'block absolute top-1/4 left-0 w-3/4 border-b-2 border-b-black duration-300 group-hover:border-b-yellow-primary group-hover:left-1/2',
+                { 'border-b-white': darkTheme }
+              )}
+            ></span>
+            <span
+              className={classNames(
+                'block absolute top-1/2 left-1/3 w-1/3 border-b-[3px] border-b-black duration-300 group-hover:border-b-yellow-primary',
+                { 'border-b-white': darkTheme }
+              )}
+            ></span>
+            <span
+              className={classNames(
+                'block absolute top-3/4 left-1/4 w-3/4 border-b-[3px] border-b-black duration-300 group-hover:border-b-yellow-primary group-hover:-left-1/4',
+                { 'border-b-white': darkTheme }
+              )}
+            ></span>
           </button>
         </div>
       </div>
@@ -401,20 +432,26 @@ export default function Header() {
               transition: { duration: 0.1, type: 'tween' }
             }}
             exit={{ x: [0, 300], opacity: 0 }}
-            className='fixed lg:w-1/3 sm:w-1/2 w-full top-0 bottom-0 right-0 bg-white px-12 py-8 duration-300'
+            className={classNames('fixed lg:w-1/3 sm:w-1/2 w-full top-0 bottom-0 right-0 px-12 py-8 duration-300', {
+              'bg-black': darkTheme,
+              'bg-white': !darkTheme
+            })}
           >
             <div className='flex justify-between items-center'>
               <Link to={paths.home} onClick={handleHeaderButtonNavigate}>
                 <img src={logoImg.logo} alt='Logo' className='block w-24 h-20' />
               </Link>
               <button
-                className='rounded-full border border-gray-300 w-16 h-16 transition-colors duration-300 hover:border-pink-primary hover:bg-pink-primary hover:text-white'
+                className={classNames(
+                  'rounded-full border border-gray-300 w-16 h-16 transition-colors duration-300 hover:border-pink-primary hover:bg-pink-primary hover:text-white',
+                  { 'text-white': darkTheme }
+                )}
                 onClick={() => setOpenMobileMenu(false)}
               >
                 <FontAwesomeIcon icon={faXmark} className='text-3xl' />
               </button>
             </div>
-            <div className='text-black mt-4'>
+            <div className={classNames('mt-4', { 'text-white': darkTheme })}>
               <Link to={paths.home} onClick={handleHeaderButtonNavigate} className='block w-full py-3 header-btn'>
                 Trang chủ
               </Link>
@@ -439,7 +476,7 @@ export default function Header() {
               </Link>
               <hr />
             </div>
-            <div className='text-black py-2'>
+            <div className={classNames('py-2', { 'text-white': darkTheme })}>
               {language === languages.vietnamese ? (
                 <button
                   className='duration-200 pointer hover:text-yellow-primary'
@@ -501,7 +538,7 @@ export default function Header() {
                 <FontAwesomeIcon icon={faMagnifyingGlass} className='text-lg' />
               </button>
             </form>
-            <div className='text-sm text-black mt-20'>
+            <div className={classNames('text-sm mt-20', { 'text-white': darkTheme })}>
               {isAuthenticated ? (
                 <>
                   <div className='flex justify-between items-center'>

@@ -1,6 +1,7 @@
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useMutation } from '@tanstack/react-query'
+import classNames from 'classnames'
 import { jwtDecode } from 'jwt-decode'
 import { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -15,7 +16,7 @@ import { clearCart, getAccessTokenFromLocalStorage, getCartItems, saveCartToLoca
 import { formatCurrency } from 'src/utils/utils'
 
 export default function Cart() {
-  const { cart, setCart } = useContext(AppContext)
+  const { cart, setCart, darkTheme } = useContext(AppContext)
   const [decodedToken, setDecodedToken] = useState<{
     id: string
     isAdmin: string
@@ -145,7 +146,7 @@ export default function Cart() {
   }
 
   return (
-    <div className='pt-28 pb-12 lg:px-32 px-4 md:px-16'>
+    <div className={classNames('pt-28 pb-12 lg:px-32 px-4 md:px-16', { 'bg-black-theme text-white': darkTheme })}>
       <NavigationTree
         tree={[
           { name: 'Trang chủ', path: paths.home },
@@ -160,7 +161,7 @@ export default function Cart() {
         </div>
       ) : (
         <>
-          <div className='flex flex-col lg:flex-row gap-12'>
+          <div className={classNames('flex flex-col lg:flex-row gap-12', { 'text-white': darkTheme })}>
             <div className='lg:w-3/4'>
               <div className='mb-2'>
                 {cart.map((item, index) => {
@@ -207,7 +208,7 @@ export default function Cart() {
                 <span className='text-lg font-bold text-red-500'>{formatCurrency(total)}</span>
               </div>
             </div>
-            <div className='lg:w-1/4 border shadow-lg p-2 rounded-[36px]'>
+            <div className='text-black bg-white lg:w-1/4 border shadow-lg p-2 rounded-[36px]'>
               <input
                 className='w-full px-6 py-3 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-pink-primary'
                 type='text'

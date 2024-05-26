@@ -5,12 +5,13 @@ import { AppContext } from 'src/contexts/app.context'
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import paths from 'src/constants/paths'
+import classNames from 'classnames'
 
 export default function Footer() {
-  const { isAuthenticated, userEmail } = useContext(AppContext)
+  const { isAuthenticated, userEmail, darkTheme } = useContext(AppContext)
   return (
-    <div className='bg-white w-full px-4 py-10 border-t'>
-      <div className='flex justify-center items-center text-gray-500 text-3xl gap-4'>
+    <div className={classNames('w-full px-4 py-10 border-t', { 'bg-black-theme text-white': darkTheme })}>
+      <div className='flex justify-center items-center text-gray-300 text-3xl gap-4'>
         <a
           href='https://www.facebook.com/nam.nguyens.359'
           className='p-2 m-2 hover:text-purple-primary'
@@ -28,7 +29,7 @@ export default function Footer() {
           <FontAwesomeIcon icon={faFacebook} />
         </a>
       </div>
-      <div className='m-auto pb-4 text-black text-center'>
+      <div className='m-auto pb-4 text-center'>
         {(isAuthenticated && (
           <>
             <span>Hello! </span>
@@ -46,7 +47,7 @@ export default function Footer() {
           </div>
         )}
       </div>
-      <p className='text-center text-black text-sm'>
+      <p className='text-center text-sm'>
         Copyright © 2024 by <span className='text-pink-primary hover:text-purple-primary'>NEM</span>. All rights
         reserved.
       </p>

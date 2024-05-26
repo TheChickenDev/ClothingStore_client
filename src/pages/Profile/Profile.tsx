@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
+import classNames from 'classnames'
 import { jwtDecode } from 'jwt-decode'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -36,7 +37,7 @@ export default function Profile() {
   })
 
   const navigate = useNavigate()
-  const { setUserAvatar } = useContext(AppContext)
+  const { setUserAvatar, darkTheme } = useContext(AppContext)
   const updateMutation = useMutation({
     mutationFn: ({ id, body }: { id: string; body: FormData }) => updateAccount(id, body)
   })
@@ -105,7 +106,7 @@ export default function Profile() {
   }
 
   return (
-    <div className='pt-28 pb-12 lg:px-32 px-4 md:px-16'>
+    <div className={classNames('pt-28 pb-12 lg:px-32 px-4 md:px-16', { 'bg-black-theme': darkTheme })}>
       <NavigationTree
         tree={[
           { name: 'Trang chủ', path: paths.home },
@@ -175,7 +176,7 @@ export default function Profile() {
             ref={avatarRef}
             className='w-3/4 aspect-square rounded-full mb-2 mx-auto'
           />
-          <div>
+          <div className={classNames({ 'text-white': darkTheme })}>
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg hidden'
               id='avatar'

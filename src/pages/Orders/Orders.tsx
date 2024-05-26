@@ -1,12 +1,14 @@
 import { faInfo, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useQuery } from '@tanstack/react-query'
+import classNames from 'classnames'
 import { jwtDecode } from 'jwt-decode'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { getOrders } from 'src/apis/user.api'
 import { cartImg, logoImg } from 'src/assets/images'
 import NavigationTree from 'src/components/NavigationTree'
 import paths from 'src/constants/paths'
+import { AppContext } from 'src/contexts/app.context'
 import { Order } from 'src/types/order.type'
 import { JWTPayload } from 'src/types/utils.type'
 import { getAccessTokenFromLocalStorage } from 'src/utils/auth'
@@ -24,7 +26,7 @@ function OrderDetailPopup({
   }
   return (
     !!order && (
-      <div className='fixed top-0 right-0 left-0 bottom-0 bg-black-layer z-50'>
+      <div className='text-black fixed top-0 right-0 left-0 bottom-0 bg-black-layer z-50'>
         <div className='relative bg-white sm:w-3/4 w-4/5 mx-auto mt-24 p-4 rounded-md max-h-[500px] overflow-auto'>
           <button
             onClick={handleHidePopup}
@@ -97,6 +99,7 @@ function OrderDetailPopup({
 }
 
 export default function Orders() {
+  const { darkTheme } = useContext(AppContext)
   const { id } = jwtDecode<JWTPayload>(getAccessTokenFromLocalStorage())
   const { isLoading, data } = useQuery({
     queryKey: ['orders', id],
@@ -114,7 +117,7 @@ export default function Orders() {
   }
 
   return (
-    <div className='pt-28 pb-12 lg:px-32 px-4 md:px-16'>
+    <div className={classNames('pt-28 pb-12 lg:px-32 px-4 md:px-16', { 'bg-black-theme text-white': darkTheme })}>
       <NavigationTree
         tree={[
           { name: 'Trang chủ', path: paths.home },

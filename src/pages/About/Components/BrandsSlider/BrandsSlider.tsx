@@ -39,74 +39,74 @@ export default function BrandsSlider() {
     <section className='mt-12 sm:pt-24 pt-12'>
       <Slider {...settings}>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.amazonLogo} alt='amazon' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.beyondLogo} alt='beyond' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.googleLogo} alt='google' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.microsoftLogo} alt='microsoft' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.olaLogo} alt='ola' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.techlifyLogo} alt='techlify' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.walmartLogo} alt='walmart' className='block' />
           </div>
         </div>
       </Slider>
       <Slider {...settings} rtl={true} className='mt-4'>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.amazonLogo} alt='amazon' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.beyondLogo} alt='beyond' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.googleLogo} alt='google' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.microsoftLogo} alt='microsoft' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.olaLogo} alt='ola' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.techlifyLogo} alt='techlify' className='block' />
           </div>
         </div>
         <div>
-          <div className='w-60 h-36 rounded-lg flex justify-center items-center border'>
+          <div className='bg-white w-60 h-36 rounded-lg flex justify-center items-center border'>
             <img src={aboutPageImg.walmartLogo} alt='walmart' className='block' />
           </div>
         </div>

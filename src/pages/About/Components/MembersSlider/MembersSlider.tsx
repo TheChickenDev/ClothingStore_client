@@ -4,9 +4,10 @@ import { faArrowRightLong, faShareNodes } from '@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Slider from 'react-slick'
 import { aboutPageImg } from 'src/assets/images'
+import { AppContext } from 'src/contexts/app.context'
 
 function ContactPopup() {
   const [isOpen, setIsOpen] = useState(false)
@@ -70,6 +71,7 @@ function ContactPopup() {
 
 export default function MembersSlider() {
   const [activeSlide, setActiveSlide] = useState(0)
+  const { darkTheme } = useContext(AppContext)
 
   const settings = {
     dots: true,
@@ -109,7 +111,7 @@ export default function MembersSlider() {
   return (
     <section className='md:px-24 px-4'>
       <div className='flex justify-between items-center mb-8'>
-        <p className='lg:text-7xl text-5xl font-heading font-bold'>
+        <p className={classNames('lg:text-7xl text-5xl font-heading font-bold', { 'text-white': darkTheme })}>
           One&nbsp;
           <span className='relative text-pink-primary'>
             Team
@@ -130,62 +132,62 @@ export default function MembersSlider() {
       </div>
       <Slider {...settings} className='-mx-4'>
         <div className='px-4'>
-          <div className='relative overflow-hidden  '>
+          <div className='relative overflow-hidden'>
             <img src={aboutPageImg.member1} alt='member1' className='block w-full' />
             <ContactPopup />
           </div>
           <div className='font-heading-2'>
-            <p className='font-bold text-xl mt-2'>Leslie Alexander</p>
+            <p className={classNames('font-bold text-xl mt-2', { 'text-white': darkTheme })}>Leslie Alexander</p>
             <p className='text-xs text-gray-500'>FOUNDER-CO</p>
           </div>
         </div>
-        <div className='relative px-4'>
-          <div className='relative overflow-hidden  '>
+        <div className='px-4'>
+          <div className='relative overflow-hidden'>
             <img src={aboutPageImg.member2} alt='member2' className='block w-full' />
             <ContactPopup />
           </div>
           <div className='font-heading-2'>
-            <p className='font-bold text-xl mt-2'>Annette Black</p>
+            <p className={classNames('font-bold text-xl mt-2', { 'text-white': darkTheme })}>Annette Black</p>
             <p className='text-xs text-gray-500'>PRODUCT DESIGNER</p>
           </div>
         </div>
-        <div className='relative px-4'>
-          <div className='relative overflow-hidden  '>
+        <div className='px-4'>
+          <div className='relative overflow-hidden'>
             <img src={aboutPageImg.member3} alt='member3' className='block w-full' />
             <ContactPopup />
           </div>
           <div className='font-heading-2'>
-            <p className='font-bold text-xl mt-2'>Kathryn Murphy</p>
+            <p className={classNames('font-bold text-xl mt-2', { 'text-white': darkTheme })}>Kathryn Murphy</p>
             <p className='text-xs text-gray-500'>CREATIVE DIRECTOR</p>
           </div>
         </div>
-        <div className='relative px-4'>
-          <div className='relative overflow-hidden  '>
+        <div className='px-4'>
+          <div className='relative overflow-hidden'>
             <img src={aboutPageImg.member4} alt='member4' className='block w-full' />
             <ContactPopup />
           </div>
           <div className='font-heading-2'>
-            <p className='font-bold text-xl mt-2'>Guy Hawkins</p>
+            <p className={classNames('font-bold text-xl mt-2', { 'text-white': darkTheme })}>Guy Hawkins</p>
             <p className='text-xs text-gray-500'>DEVELOPER</p>
           </div>
         </div>
-        <div className='relative px-4'>
-          <div className='relative overflow-hidden  '>
+        <div className='px-4'>
+          <div className='relative overflow-hidden'>
             <img src={aboutPageImg.member5} alt='member5' className='block w-full' />
             <ContactPopup />
           </div>
           <div className='font-heading-2'>
-            <p className='font-bold text-xl mt-2'>Deli Yanky</p>
+            <p className={classNames('font-bold text-xl mt-2', { 'text-white': darkTheme })}>Deli Yanky</p>
             <p className='text-xs text-gray-500'>CONSULTING OFFICER</p>
           </div>
         </div>
-        <div className='relative px-4'>
-          <div className='relative overflow-hidden  '>
+        <div className='px-4'>
+          <div className='relative overflow-hidden'>
             <img src={aboutPageImg.member6} alt='member6' className='block w-full' />
             <ContactPopup />
           </div>
           <div className='font-heading-2'>
-            <p className='font-bold text-xl mt-2'>Zin Denvar</p>
+            <p className={classNames('font-bold text-xl mt-2', { 'text-white': darkTheme })}>Zin Denvar</p>
             <p className='text-xs text-gray-500'>SALES MANAGER</p>
           </div>
         </div>

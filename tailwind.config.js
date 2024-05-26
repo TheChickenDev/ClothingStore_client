@@ -13,6 +13,7 @@ export const theme = {
       'gray-border': '#eaeaef',
       'black-primary': '#1d1e23',
       'black-layer': '#00000080',
+      'black-theme': '#1f1f1f',
       'pink-primary': '#f50963',
       'purple-primary': '#6364db',
       'purple-layer': '#03041c8f'

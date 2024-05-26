@@ -24,19 +24,18 @@ class HTTP {
     this.refresh_token = getRefreshTokenFromLocalStorage()
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
-      timeout: 30000
+      timeout: 30000,
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     this.instance.interceptors.request.use(
       async (config) => {
-        if (config.headers && this.access_token && this.refresh_token) {
-          const contentType = formDataUrl.some((item) => config.url?.includes(item))
-            ? 'multipart/form-data'
-            : 'application/json'
-          console.log(contentType)
-          console.log(formDataUrl.some((item) => config.url?.includes(item)))
+        if (this.access_token && this.refresh_token) {
+          const contentType = formDataUrl.some((item) => config.url?.includes(item)) ? 'multipart/form-data' : ''
+          if (contentType) config.headers['Content-Type'] = contentType
           config.headers['access_token'] = 'Bearer ' + this.access_token
           config.headers['refresh_token'] = 'Bearer ' + this.refresh_token
-          config.headers['Content-Type'] = contentType
         }
         return config
       },
@@ -64,18 +63,25 @@ class HTTP {
         const originalRequest = error.config
         if (error.response.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true
-          const refreshTokenResponse = await refreshAccessToken()
-          const new_access_token = refreshTokenResponse.data.data
-          saveAccessTokenToLocalStorage(new_access_token)
-          this.access_token = new_access_token
-          originalRequest.headers.access_token = 'Bearer ' + new_access_token
-          return this.instance(originalRequest)
-            .then((response) => {
-              return response
+          await refreshAccessToken()
+            .then((res) => {
+              const new_access_token = res.data.data
+              if (!new_access_token) {
+                toast.error('Lỗi xác thực! Vui lòng thử lại sau!')
+                return
+              }
+              saveAccessTokenToLocalStorage(new_access_token)
+              this.access_token = new_access_token
+              originalRequest.headers.access_token = 'Bearer ' + new_access_token
+              return this.instance(originalRequest)
+                .then((response) => {
+                  return response
+                })
+                .catch((error) => {
+                  toast.error(error)
+                })
             })
-            .catch((error) => {
-              toast.error(error)
-            })
+            .catch((err) => err)
         }
         return Promise.reject(error)
       }

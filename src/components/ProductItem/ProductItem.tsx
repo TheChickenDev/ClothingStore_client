@@ -72,7 +72,7 @@ export default function ProductItem({
   return (
     <Link
       to={`/product/${_id}`}
-      className={`${isGridView ? 'block' : 'flex justify-between items-center mt-4'} shadow-md rounded-md group overflow-hidden`}
+      className={`${isGridView ? 'block' : 'flex justify-between items-center mt-4'} shadow-md rounded-md group overflow-hidden bg-white`}
       onMouseEnter={(e) => handleMouseEnter(e)}
       onMouseLeave={(e) => handleMouseLeave(e)}
     >

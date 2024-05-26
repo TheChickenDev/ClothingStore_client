@@ -14,7 +14,7 @@ export default function Selling({ categoryShowedIndex }: { categoryShowedIndex: 
   return (
     categoryShowedIndex === 1 && (
       <motion.div initial={{ opacity: 0, y: 200 }} animate={{ opacity: 1, y: [200, 0] }}>
-        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-white py-2'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-transparent py-2'>
           {isLoading ? (
             <div className='col-span-1 sm:col-span-2 lg:col-span-4 min-h-96 flex justify-center items-center'>
               <div className='loader'></div>

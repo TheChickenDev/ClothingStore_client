@@ -9,6 +9,7 @@ interface SidebarFilterProps {
   handleChooseRating: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleResetFilter: () => void
   type: string
+  darkTheme: boolean
 }
 
 export default function SidebarFilter({
@@ -16,11 +17,12 @@ export default function SidebarFilter({
   handleChoosePrice,
   handleChooseRating,
   handleResetFilter,
-  type
+  type,
+  darkTheme
 }: SidebarFilterProps) {
   return (
     <>
-      <div className='w-full mb-5'>
+      <div className={classNames('w-full mb-5', { 'text-white': darkTheme })}>
         <button className='w-full text-left p-2 border-b hover:text-pink-primary'>Loại</button>
         <ul className='list-disc mx-6 my-2 text-sm text-nowrap'>
           <li>
@@ -65,7 +67,7 @@ export default function SidebarFilter({
           </li>
         </ul>
       </div>
-      <div className='w-full mb-5'>
+      <div className={classNames('w-full mb-5', { 'text-white': darkTheme })}>
         <button className='w-full text-left p-2 border-b hover:text-pink-primary'>Giá</button>
         <div className='mx-2 my-2 text-sm text-nowrap'>
           <div className='py-2'>
@@ -100,12 +102,12 @@ export default function SidebarFilter({
           </div>
         </div>
       </div>
-      <div className='w-full mb-5'>
+      <div className={classNames('w-full mb-5', { 'text-white': darkTheme })}>
         <button className='w-full text-left p-2 border-b hover:text-pink-primary'>Đánh giá</button>
         <div className='mx-2 my-2 text-sm text-nowrap'>
           <div className='py-2'>
             <input type='radio' id='rating-one' name='rating' onChange={handleChooseRating} />
-            <label htmlFor='rating-one' className='hover:text-pink-primary cursor-pointer'>
+            <label htmlFor='rating-one' className='cursor-pointer'>
               {}
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
               <FontAwesomeIcon icon={faStarRegular} className='text-yellow-primary' />
@@ -116,7 +118,7 @@ export default function SidebarFilter({
           </div>
           <div className='py-2'>
             <input type='radio' id='rating-two' name='rating' onChange={handleChooseRating} />
-            <label htmlFor='rating-two' className='hover:text-pink-primary cursor-pointer'>
+            <label htmlFor='rating-two' className='cursor-pointer'>
               {}
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
@@ -127,7 +129,7 @@ export default function SidebarFilter({
           </div>
           <div className='py-2'>
             <input type='radio' id='rating-three' name='rating' onChange={handleChooseRating} />
-            <label htmlFor='rating-three' className='hover:text-pink-primary cursor-pointer'>
+            <label htmlFor='rating-three' className='cursor-pointer'>
               {}
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
@@ -138,7 +140,7 @@ export default function SidebarFilter({
           </div>
           <div className='py-2'>
             <input type='radio' id='rating-four' name='rating' onChange={handleChooseRating} />
-            <label htmlFor='rating-four' className='hover:text-pink-primary cursor-pointer'>
+            <label htmlFor='rating-four' className='cursor-pointer'>
               {}
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
@@ -149,7 +151,7 @@ export default function SidebarFilter({
           </div>
           <div className='py-2'>
             <input type='radio' id='rating-five' name='rating' onChange={handleChooseRating} />
-            <label htmlFor='rating-five' className='hover:text-pink-primary cursor-pointer'>
+            <label htmlFor='rating-five' className='cursor-pointer'>
               {}
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />
               <FontAwesomeIcon icon={faStar} className='text-yellow-primary' />

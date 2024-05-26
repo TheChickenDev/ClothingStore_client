@@ -5,7 +5,7 @@ export default function Statistic() {
 
   return (
     <section className='grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2 sm:px-24 px-4'>
-      <div className='group border p-6 hover:border-transparent hover:shadow-lg duration-300'>
+      <div className='bg-white group border p-6 hover:border-transparent hover:shadow-lg duration-300'>
         <div className='flex justify-between items-start'>
           <span className='group-hover:-translate-y-4 transition-transform duration-200'>
             <svg width='47' height='42' viewBox='0 0 47 42' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -58,7 +58,7 @@ export default function Statistic() {
           </p>
         </div>
       </div>
-      <div className='group border p-6 hover:border-transparent hover:shadow-lg duration-300'>
+      <div className='bg-white group border p-6 hover:border-transparent hover:shadow-lg duration-300'>
         <div className='flex justify-between items-start'>
           <span className='group-hover:-translate-y-4 transition-transform duration-200'>
             <svg width='32' height='40' viewBox='0 0 32 40' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -111,7 +111,7 @@ export default function Statistic() {
           </p>
         </div>
       </div>
-      <div className='group xl:col-span-1 sm:col-span-2 border p-6 hover:border-transparent hover:shadow-lg duration-300'>
+      <div className='bg-white group xl:col-span-1 sm:col-span-2 border p-6 hover:border-transparent hover:shadow-lg duration-300'>
         <div className='flex justify-between items-start'>
           <span className='group-hover:-translate-y-4 transition-transform duration-300'>
             <svg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'>

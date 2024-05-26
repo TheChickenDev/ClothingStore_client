@@ -51,7 +51,7 @@ export default function VoucherItem({ image, name, percent, expiredAt, condition
   }
 
   return (
-    <div className='sm:flex sm:justify-between sm:items-center gap-2 p-4 border-2 border-gray-border relative'>
+    <div className='sm:flex sm:justify-between sm:items-center gap-2 p-4 border-2 border-gray-border bg-white relative'>
       <div className='flex sm:justify-start justify-center items-center w-3/4'>
         <div className='sm:block hidden w-32 h-32 mr-4'>
           <img src={image} alt={name} className='block w-full h-full' />

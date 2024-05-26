@@ -9,6 +9,7 @@ interface TopbarFilterProps {
   setIsGridView: (value: boolean) => void
   selectRef: React.RefObject<HTMLSelectElement>
   handleSort: () => void
+  darkTheme: boolean
 }
 
 export default function TopbarFilter({
@@ -17,10 +18,11 @@ export default function TopbarFilter({
   isGridView,
   setIsGridView,
   selectRef,
-  handleSort
+  handleSort,
+  darkTheme
 }: TopbarFilterProps) {
   return (
-    <div className='sm:flex justify-between items-center border px-4 py-2'>
+    <div className={classNames('sm:flex justify-between items-center border px-4 py-2', { 'text-white': darkTheme })}>
       <p className='my-2'>
         Hiển thị trang {totalPage ?? 0 > 0 ? currentPage : 0}/{totalPage}
       </p>
@@ -42,7 +44,7 @@ export default function TopbarFilter({
           <FontAwesomeIcon icon={faBars} />
         </button>
         <select
-          className='flex justify-between items-center w-44 py-2 border relative'
+          className='flex justify-between items-center w-44 py-2 border relative text-black'
           name='sort'
           onChange={handleSort}
           ref={selectRef}

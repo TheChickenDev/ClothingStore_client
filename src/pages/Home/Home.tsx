@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Carousel from './Components/Carousel'
 import Category from './Components/Category'
@@ -8,10 +8,13 @@ import Selling from './Components/Selling'
 import Voucher from './Components/Voucher'
 import { Link } from 'react-router-dom'
 import paths from 'src/constants/paths'
+import classNames from 'classnames'
+import { AppContext } from 'src/contexts/app.context'
 
 export default function Home() {
   const [categoryIndex, setCategoryIndex] = useState<number>(0)
   const categoryBtnListRef = useRef<HTMLDivElement>(null)
+  const { darkTheme } = useContext(AppContext)
 
   const handleCategoryBtnClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, index: number) => {
     e.preventDefault()
@@ -26,23 +29,26 @@ export default function Home() {
   }, [categoryIndex])
 
   return (
-    <div className='mt-24'>
+    <div className={classNames('mt-24', { 'bg-black-theme': darkTheme })}>
       <Carousel />
       <div className='lg:px-32 md:px-16 px-4'>
         <div className='pl-4 mt-12 mb-4 border-l-4 border-l-pink-primary'>
-          <p className='text-xl font-bold uppercase'>Bạn đang tìm kiếm?</p>
+          <p className={classNames('text-xl font-bold uppercase', { 'text-white': darkTheme })}>Bạn đang tìm kiếm?</p>
         </div>
         <Category />
         <div className='sm:flex sm:justify-between sm:items-center mt-12 mb-4'>
           <div className='pl-4 border-l-4 border-l-pink-primary'>
-            <p className='text-xl font-bold uppercase'>Sản phẩm phổ biến</p>
+            <p className={classNames('text-xl font-bold uppercase', { 'text-white': darkTheme })}>Sản phẩm phổ biến</p>
           </div>
           <div
             className='flex sm:justify-center justify-start items-center gap-5 sm:mt-0 mt-6'
             ref={categoryBtnListRef}
           >
             <button
-              className='relative p-1 overflow-hidden transition-colors duration-500 text-sm text-gray-700'
+              className={classNames(
+                'relative p-1 overflow-hidden transition-colors duration-500 text-sm text-gray-700',
+                { 'text-white': darkTheme }
+              )}
               onClick={(e) => handleCategoryBtnClick(e, 0)}
             >
               Đánh giá cao
@@ -60,7 +66,10 @@ export default function Home() {
               </AnimatePresence>
             </button>
             <button
-              className='relative p-1 overflow-hidden transition-colors duration-500 text-sm text-gray-700'
+              className={classNames(
+                'relative p-1 overflow-hidden transition-colors duration-500 text-sm text-gray-700',
+                { 'text-white': darkTheme }
+              )}
               onClick={(e) => handleCategoryBtnClick(e, 1)}
             >
               Bán chạy
@@ -78,7 +87,10 @@ export default function Home() {
               </AnimatePresence>
             </button>
             <button
-              className='relative p-1 overflow-hidden transition-colors duration-500 text-sm text-gray-700'
+              className={classNames(
+                'relative p-1 overflow-hidden transition-colors duration-500 text-sm text-gray-700',
+                { 'text-white': darkTheme }
+              )}
               onClick={(e) => handleCategoryBtnClick(e, 2)}
             >
               Mới nhất
@@ -102,7 +114,9 @@ export default function Home() {
         <New categoryShowedIndex={categoryIndex} />
         <div className='sm:flex sm:justify-between sm:items-center mt-12 mb-4'>
           <div className='pl-4 border-l-4 border-l-pink-primary'>
-            <p className='text-xl font-bold uppercase'>Chương trình giảm giá</p>
+            <p className={classNames('text-xl font-bold uppercase', { 'text-white': darkTheme })}>
+              Chương trình giảm giá
+            </p>
           </div>
           <Link
             to={{

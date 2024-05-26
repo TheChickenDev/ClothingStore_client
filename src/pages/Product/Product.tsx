@@ -22,7 +22,7 @@ export default function Product() {
     queryKey: ['products', id],
     queryFn: () => getProduct(id)
   })
-  const { setCart } = useContext(AppContext)
+  const { setCart, darkTheme } = useContext(AppContext)
   const imgRef = useRef<HTMLImageElement>(null)
 
   const [quantity, setQuantity] = useState<number>(1)
@@ -131,7 +131,7 @@ export default function Product() {
   }, [data])
 
   return (
-    <div className='py-28 lg:px-32 md:px-8 px-4'>
+    <div className={classNames('py-28 lg:px-32 md:px-8 px-4', { 'bg-black-theme text-white': darkTheme })}>
       {isLoading ? (
         <div className='col-span-1 sm:col-span-2 lg:col-span-4 min-h-96 flex justify-center items-center'>
           <div className='loader'></div>
@@ -159,7 +159,7 @@ export default function Product() {
                     className='block w-full cursor-zoom-in duration-300'
                   />
                 </div>
-                <div className='flex justify-start items-center gap-2'>
+                <div className='flex justify-start items-center gap-2 mt-2'>
                   {[
                     { url: data?.data.data.img, path: data?.data.data.imgPath },
                     ...(data?.data.data.thumbnail ?? [])
@@ -178,7 +178,7 @@ export default function Product() {
               </div>
               <div className='col-span-1 lg:col-span-1'>
                 <h1 className='text-4xl font-semibold'>{data?.data.data.name}</h1>
-                <h1 className='text-sm text-gray-500 mt-4'>
+                <h1 className='text-sm text-gray-400 mt-4'>
                   Mua sắm tại Hein Shop với giá ưu đãi hàng ngày. Giao hàng miễn phí cho đơn hàng từ 200.000 ₫ trở lên
                   hoặc nhận hàng tại cửa hàng.
                 </h1>
@@ -245,7 +245,7 @@ export default function Product() {
                   <button onClick={decreaseQuantity} className='w-12 h-10 hover:text-pink-primary duration-300'>
                     <FontAwesomeIcon icon={faMinus} />
                   </button>
-                  <span className='w-12 border-l border-r text-center text-gray-700'>{quantity}</span>
+                  <span className='w-12 border-l border-r text-center'>{quantity}</span>
                   <button onClick={increaseQuantity} className='w-12 h-10 hover:text-pink-primary duration-300'>
                     <FontAwesomeIcon icon={faPlus} />
                   </button>

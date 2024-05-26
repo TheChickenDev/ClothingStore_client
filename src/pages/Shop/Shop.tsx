@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
 import debounce from 'lodash.debounce'
@@ -12,8 +12,10 @@ import Pagination from './Components/Pagination'
 import TopbarFilter from './Components/TopbarFilter'
 import SidebarFilter from './Components/SidebarFilter'
 import NavigationTree from 'src/components/NavigationTree'
+import { AppContext } from 'src/contexts/app.context'
 
 export default function Shop() {
+  const { darkTheme } = useContext(AppContext)
   const queryParams: ProductSearchParams | undefined = useQueryParams()
   const currentPage: number = Number(queryParams?.page)
   const selectRef = useRef<HTMLSelectElement>(null)
@@ -190,7 +192,7 @@ export default function Shop() {
   }
 
   return (
-    <div className='py-28 lg:px-32 md:px-8 px-4'>
+    <div className={classNames('py-28 lg:px-32 md:px-8 px-4', { 'bg-black-theme': darkTheme })}>
       <>
         <NavigationTree
           tree={[
@@ -206,6 +208,7 @@ export default function Shop() {
           setIsGridView={setIsGridView}
           selectRef={selectRef}
           handleSort={handleSort}
+          darkTheme={darkTheme}
         />
         <div className='flex md:flex-row flex-col-reverse gap-8 mt-12'>
           <div className='w-full md:w-1/4'>
@@ -215,6 +218,7 @@ export default function Shop() {
               handleChooseRating={handleChooseRating}
               handleResetFilter={handleResetFilter}
               type={type}
+              darkTheme={darkTheme}
             />
           </div>
           {isLoading ? (
@@ -248,6 +252,7 @@ export default function Shop() {
                 totalPage={Number(data?.data.data.totalPage)}
                 currentPage={currentPage}
                 queryParams={queryParams}
+                darkTheme={darkTheme}
               />
             </div>
           )}

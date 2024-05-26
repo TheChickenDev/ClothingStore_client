@@ -7,11 +7,13 @@ const PAGE_RANGE = 1
 export default function Pagination({
   totalPage,
   currentPage,
-  queryParams
+  queryParams,
+  darkTheme
 }: {
   totalPage: number
   currentPage: number
   queryParams: ProductSearchParams
+  darkTheme: boolean
 }) {
   let threeDotsAfter: boolean = false
   let threeDotsBefore: boolean = false
@@ -35,7 +37,11 @@ export default function Pagination({
     )
   }
   return (
-    <div className='flex flex-wrap justify-center text-center col-span-full mt-12'>
+    <div
+      className={classnames('flex flex-wrap justify-center text-center col-span-full mt-12', {
+        'text-white': darkTheme
+      })}
+    >
       {totalPage &&
         [...Array(totalPage).keys()].map((page) => {
           const pageNumber = page + 1
