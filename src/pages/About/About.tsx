@@ -1,16 +1,18 @@
+import Awards from './Components/Awards'
+import IntroductoryVideo from './Components/IntroductoryVideo'
 import Statistic from './Components/Statistic'
+import TeamSlider from './Components/TeamSlider'
 
 export default function About() {
   return (
     <div className='py-24'>
       <section className='relative text-center bg-about-carousel bg-no-repeat bg-cover bg-center after:bg-purple-layer after:absolute after:inset-0'>
-        <div className='relative pt-56 pb-48 text-white z-10'>
-          <p className='mb-4'>Về chúng tôi</p>
-          <p className='text-6xl'>Chào mừng đến với</p>
-          <p className='text-6xl'>Hein Shop</p>
+        <div className='relative pt-56 pb-48 text-white font-bold z-10'>
+          <p className='text-6xl mb-4'>Chào mừng đến với</p>
+          <p className='text-6xl mb-4'>Hein Shop</p>
         </div>
       </section>
-      <section className='lg:flex block justify-between items-center gap-12 sm:px-24 px-4 py-24'>
+      <section className='lg:flex block justify-between items-center gap-12 sm:px-24 px-4 sm:py-24 py-12'>
         <p className='text-3xl font-bold font-sp font-heading lg:w-1/3 lg:mb-0 mb-6'>
           Bắt đầu với phong cách riêng biệt, độc đáo.
         </p>
@@ -27,6 +29,9 @@ export default function About() {
         </p>
       </section>
       <Statistic />
+      <TeamSlider />
+      <Awards />
+      <IntroductoryVideo />
     </div>
   )
 }

@@ -390,7 +390,7 @@ export default function Header() {
           </button>
         </div>
       </div>
-      {openMobileMenu && <div className='fixed top-0 left-0 bottom-0 right-0 bg-black-layer/70'></div>}
+      {openMobileMenu && <div className='fixed top-0 left-0 bottom-0 right-0 bg-black-layer'></div>}
       <AnimatePresence>
         {openMobileMenu && (
           <motion.div

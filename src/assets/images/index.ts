@@ -44,6 +44,7 @@ import member3 from './about/member3.webp'
 import member4 from './about/member4.webp'
 import member5 from './about/member5.webp'
 import member6 from './about/member6.webp'
+import videoThumbnail from './about/videoThumbnail.jpg'
 
 export const logoImg = {
   logo
@@ -107,5 +108,6 @@ export const aboutPageImg = {
   member3,
   member4,
   member5,
-  member6
+  member6,
+  videoThumbnail
 }

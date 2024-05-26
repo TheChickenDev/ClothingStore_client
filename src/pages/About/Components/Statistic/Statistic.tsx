@@ -1,4 +1,8 @@
 export default function Statistic() {
+  const handleNavigateClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <section className='grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2 sm:px-24 px-4'>
       <div className='group border p-6 hover:border-transparent hover:shadow-lg duration-300'>
@@ -30,7 +34,7 @@ export default function Statistic() {
               ></path>
             </svg>
           </span>
-          <button>
+          <button onClick={handleNavigateClick}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='28px'
@@ -49,7 +53,7 @@ export default function Statistic() {
         </div>
         <div className='mt-12'>
           <p className='text-base text-gray-500'>10k</p>
-          <p className='relative font-heading text-2xl font-semibold after:absolute after:bottom-0 after:left-0 after:border-b-2 after:border-black after:w-0 after:duration-300 after:bg-black hover:after:w-full'>
+          <p className='w-fit relative font-heading text-2xl font-semibold after:absolute after:bottom-0 after:left-0 after:border-b-2 after:border-black after:w-0 after:duration-500 hover:after:w-full'>
             Sản phẩm
           </p>
         </div>
@@ -83,7 +87,7 @@ export default function Statistic() {
               ></path>
             </svg>
           </span>
-          <button>
+          <button onClick={handleNavigateClick}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='28px'
@@ -102,7 +106,7 @@ export default function Statistic() {
         </div>
         <div className='mt-12'>
           <p className='text-base text-gray-500'>5k</p>
-          <p className='relative font-heading text-2xl font-semibold after:absolute after:bottom-0 after:left-0 after:border-b-2 after:border-black after:w-0 after:duration-300 hover:after:w-full'>
+          <p className='w-fit relative font-heading text-2xl font-semibold after:absolute after:bottom-0 after:left-0 after:border-b-2 after:border-black after:w-0 after:duration-300 hover:after:w-full'>
             Khách hàng
           </p>
         </div>
@@ -144,7 +148,7 @@ export default function Statistic() {
               ></path>
             </svg>
           </span>
-          <button>
+          <button onClick={handleNavigateClick}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='28px'
@@ -163,7 +167,7 @@ export default function Statistic() {
         </div>
         <div className='mt-12'>
           <p className='text-base text-gray-500'>24h</p>
-          <p className='relative font-heading text-2xl font-semibold after:absolute after:bottom-0 after:left-0 after:border-b-2 after:border-black after:w-0 after:duration-300 after:bg-black hover:after:w-full'>
+          <p className='w-fit relative font-heading text-2xl font-semibold after:absolute after:bottom-0 after:left-0 after:border-b-2 after:border-black after:w-0 after:duration-300 hover:after:w-full'>
             Chăm sóc khách hàng
           </p>
         </div>

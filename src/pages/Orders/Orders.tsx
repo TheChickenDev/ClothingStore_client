@@ -24,7 +24,7 @@ function OrderDetailPopup({
   }
   return (
     !!order && (
-      <div className='fixed top-0 right-0 left-0 bottom-0 bg-black-layer/30 z-50'>
+      <div className='fixed top-0 right-0 left-0 bottom-0 bg-black-layer z-50'>
         <div className='relative bg-white sm:w-3/4 w-4/5 mx-auto mt-24 p-4 rounded-md max-h-[500px] overflow-auto'>
           <button
             onClick={handleHidePopup}

@@ -12,7 +12,7 @@ export const theme = {
       'gray-primary': '#f1f1f1',
       'gray-border': '#eaeaef',
       'black-primary': '#1d1e23',
-      'black-layer': '#03041c',
+      'black-layer': '#00000080',
       'pink-primary': '#f50963',
       'purple-primary': '#6364db',
       'purple-layer': '#03041c8f'
@@ -21,7 +21,12 @@ export const theme = {
       'about-carousel': "url('/src/assets/images/about/carousel.jpg')"
     },
     fontFamily: {
-      heading: ['Space Grotesk', 'sans-serif']
+      heading: ['Space Grotesk', 'sans-serif'],
+      'heading-2': ['Syne', 'sans-serif']
+    },
+    animation: {
+      'ping-slow': 'ping 2s linear infinite',
+      'ping-slow-delay': 'ping 2s 0.7s linear infinite'
     }
   }
 }
