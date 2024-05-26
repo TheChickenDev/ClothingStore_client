@@ -1,5 +1,7 @@
 import Awards from './Components/Awards'
+import BrandsSlider from './Components/BrandsSlider'
 import IntroductoryVideo from './Components/IntroductoryVideo'
+import MembersSlider from './Components/MembersSlider'
 import Statistic from './Components/Statistic'
 import TeamSlider from './Components/TeamSlider'
 
@@ -32,6 +34,8 @@ export default function About() {
       <TeamSlider />
       <Awards />
       <IntroductoryVideo />
+      <MembersSlider />
+      <BrandsSlider />
     </div>
   )
 }
