@@ -55,7 +55,7 @@ export default function Voucher() {
       </div>
       <div ref={scrollRef}>
         <motion.div
-          className='relative my-8'
+          className='relative py-8'
           variants={{
             hidden: { opacity: 0, y: 200 },
             visible: { opacity: 1, y: 0 }
