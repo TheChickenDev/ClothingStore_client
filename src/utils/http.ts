@@ -31,9 +31,11 @@ class HTTP {
     })
     this.instance.interceptors.request.use(
       async (config) => {
+        this.access_token = getAccessTokenFromLocalStorage()
+        this.refresh_token = getRefreshTokenFromLocalStorage()
+        const contentType = formDataUrl.some((item) => config.url?.includes(item)) ? 'multipart/form-data' : ''
+        if (contentType) config.headers['Content-Type'] = contentType
         if (this.access_token && this.refresh_token) {
-          const contentType = formDataUrl.some((item) => config.url?.includes(item)) ? 'multipart/form-data' : ''
-          if (contentType) config.headers['Content-Type'] = contentType
           config.headers['access_token'] = 'Bearer ' + this.access_token
           config.headers['refresh_token'] = 'Bearer ' + this.refresh_token
         }
@@ -63,25 +65,22 @@ class HTTP {
         const originalRequest = error.config
         if (error.response.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true
-          await refreshAccessToken()
-            .then((res) => {
-              const new_access_token = res.data.data
-              if (!new_access_token) {
-                toast.error('Lỗi xác thực! Vui lòng thử lại sau!')
-                return
-              }
-              saveAccessTokenToLocalStorage(new_access_token)
-              this.access_token = new_access_token
-              originalRequest.headers.access_token = 'Bearer ' + new_access_token
-              return this.instance(originalRequest)
-                .then((response) => {
-                  return response
-                })
-                .catch((error) => {
-                  toast.error(error)
-                })
+          const refreshTokenResponse = await refreshAccessToken()
+          const new_access_token = refreshTokenResponse.data.data
+          if (!new_access_token) {
+            toast.error('Lỗi xác thực! Vui lòng thử lại sau!')
+            return
+          }
+          saveAccessTokenToLocalStorage(new_access_token)
+          this.access_token = new_access_token
+          originalRequest.headers.access_token = 'Bearer ' + new_access_token
+          return this.instance(originalRequest)
+            .then((response) => {
+              return response
             })
-            .catch((err) => err)
+            .catch((error) => {
+              toast.error(error)
+            })
         }
         return Promise.reject(error)
       }

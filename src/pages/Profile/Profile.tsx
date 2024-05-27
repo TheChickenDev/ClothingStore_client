@@ -81,7 +81,7 @@ export default function Profile() {
             saveAccessTokenToLocalStorage(access_token)
             saveRefreshTokenToLocalStorage(refresh_token)
             toast.success(response.data.message)
-            setUserAvatar(response.data.data?.user.avatar)
+            setUserAvatar(response.data.data?.user.avatar || userImg.defaultAvatar)
             navigate(paths.profile)
           } else toast.error(response.data.message)
         },

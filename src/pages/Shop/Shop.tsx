@@ -182,11 +182,9 @@ export default function Shop() {
     document.getElementsByName('rating').forEach((element) => ((element as HTMLInputElement).checked = false))
     delete queryParams.limit
     delete queryParams.name
-    delete queryParams.order
     delete queryParams.price_min
     delete queryParams.price_max
     delete queryParams.rating_filter
-    delete queryParams.sort_by
     delete queryParams.type
     handleFilter({})
   }

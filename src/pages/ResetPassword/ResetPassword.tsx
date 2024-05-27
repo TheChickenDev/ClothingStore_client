@@ -82,7 +82,7 @@ export default function ResetPassword() {
           />
         </div>
         <div className='sm:w-1/2 px-8 text-center'>
-          <p className='text-2xl font-bold mb-2'>Đăng nhập</p>
+          <p className='text-2xl font-bold mb-2'>Đổi mật khẩu</p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               className='w-full px-6 py-3 my-2 bg-gray-100 rounded-3xl text-lg outline-none focus:placeholder:text-green-primary'
@@ -139,7 +139,7 @@ export default function ResetPassword() {
                   <div className='loader'></div>
                 </div>
               ) : (
-                'Đăng nhập'
+                'Xác nhận'
               )}
             </button>
           </form>

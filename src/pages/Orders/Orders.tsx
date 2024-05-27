@@ -130,7 +130,7 @@ export default function Orders() {
           <div className='loader'></div>
         </div>
       ) : (
-        <div>
+        <div className='min-h-96'>
           {data?.data.data.length === 0 ? (
             <div className='flex justify-center items-center'>
               <img src={cartImg.emptyOrderList} width='500px' height='380px' alt='emptyOrderList' />
