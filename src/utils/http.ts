@@ -24,7 +24,7 @@ class HTTP {
     this.refresh_token = getRefreshTokenFromLocalStorage()
     this.instance = axios.create({
       baseURL: import.meta.env.VITE_API_URL,
-      timeout: 30000,
+      timeout: 180000,
       headers: {
         'Content-Type': 'application/json'
       }
