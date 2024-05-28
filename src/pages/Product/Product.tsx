@@ -49,6 +49,11 @@ export default function Product() {
   })
 
   const handleAddToCart = async () => {
+    const token = getAccessTokenFromLocalStorage()
+    if (!token) {
+      toast.info('Vui lòng đăng nhập để thực hiện chức năng này!')
+      return
+    }
     if (!size) {
       toast.error('Vui lòng chọn size!')
       return
@@ -63,8 +68,7 @@ export default function Product() {
       price: Number(product?.price)
     }
 
-    const decodedToken: JWTPayload = jwtDecode(getAccessTokenFromLocalStorage())
-
+    const decodedToken: JWTPayload = jwtDecode(token)
     loginMutation.mutate(
       { id: decodedToken.id, body },
       {
